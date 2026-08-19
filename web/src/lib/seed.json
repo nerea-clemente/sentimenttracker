@@ -1,10 +1,8 @@
 {
- "generated_at": "2026-08-19T14:06:40Z",
- "generated_by": "user:root",
+ "generated_at": "2026-08-19T15:30:00Z",
+ "generated_by": "github-actions",
  "mode": "snapshot",
- "warnings": [
-  "No articles are imported in this database, so every footprint figure in this snapshot is an empty dataset rather than a measurement of low coverage."
- ],
+ "warnings": [],
  "meta": {
   "metric_order": [
    "unique_stories",
@@ -278,14 +276,14 @@
    "sitemap",
    "gdelt_query"
   ],
-  "last_import_at": null
+  "last_import_at": "2026-08-19T15:29:59Z"
  },
  "stats": {
   "campaigns": 4,
   "campaigns_published": 3,
   "campaigns_pre_publication": 1,
-  "articles": 0,
-  "outlets": 0,
+  "articles": 3,
+  "outlets": 3,
   "outlets_with_sourced_reach": 0,
   "escalations": 0,
   "mentions": 0,
@@ -323,17 +321,24 @@
    },
    {
     "level": "warning",
-    "code": "poller-never-run",
-    "title": "The poller has never run",
-    "detail": "'We saw nothing' is not distinguishable from 'nobody looked'.",
-    "fix": "cib watch poll   # or let the scheduled workflow do it"
+    "code": "watch-rules-failing",
+    "title": "1 enabled rule(s) failed on their last run",
+    "detail": "#1 HTTP 403 from https://theoutlawocean.substack.com/feed",
+    "fix": "cib watch poll   # to retry"
    },
    {
-    "level": "blocker",
-    "code": "nothing-imported",
-    "title": "Nothing has ever been imported",
-    "detail": "Every footprint figure in the system is an empty dataset.",
-    "fix": "cib import inspect --file <export> --source infomedia"
+    "level": "ok",
+    "code": "poller",
+    "title": "The poller is running",
+    "detail": "Last run 2026-08-19T15:29:41Z.",
+    "fix": null
+   },
+   {
+    "level": "warning",
+    "code": "no-reach",
+    "title": "No outlet has a sourced reach figure",
+    "detail": "0 of 3 outlets. Total reach is null by design — a reach figure may only be stored with a named source.",
+    "fix": "cib outlet reach <id> --value N --source '<where it came from>'"
    },
    {
     "level": "warning",
@@ -350,15 +355,149 @@
     "fix": "Set CIB_NOTIFY_CHANNELS=webhook and CIB_NOTIFY_WEBHOOK_URL in .env (and as a GitHub secret for the workflow). Verify with: cib watch test-alert"
    }
   ],
-  "blockers": 2,
-  "warnings": 4,
-  "ok": 1
+  "blockers": 1,
+  "warnings": 5,
+  "ok": 2
  },
  "evidence": {
-  "articles": {},
+  "articles": {
+   "3": {
+    "id": 3,
+    "day_index": null,
+    "published_at": "2026-08-13T09:30:00",
+    "headline": "OPINION | We cant keep feeding fish to fish if we want aquaculture to be the next frontier of food security",
+    "url": "https://www.theweek.in/news/maritime/2026/08/13/guest-opinion-aquaculture-supply-chain-fragility.html",
+    "byline": null,
+    "country": "IN",
+    "language": "en",
+    "word_count": null,
+    "is_original": 1,
+    "cluster_id": null,
+    "campaign_id": 3,
+    "outlet_id": 3,
+    "outlet": "theweek.in",
+    "domain": "theweek.in",
+    "tier": "blog",
+    "outlet_country": "IN",
+    "reach_value": null,
+    "reach_source": null,
+    "reach_is_estimated": 0,
+    "import_id": 1,
+    "import_source": "gdelt",
+    "file_name": null,
+    "imported_at": "2026-08-19T15:29:59Z",
+    "imported_by": "github-actions"
+   },
+   "2": {
+    "id": 2,
+    "day_index": null,
+    "published_at": "2026-08-14T03:15:00",
+    "headline": "Aquaculture is depleting the oceans : A farmed salmon can consume more than six times its weight in wild fish",
+    "url": "https://english.elpais.com/climate/2026-08-13/aquaculture-is-depleting-the-oceans-a-farmed-salmon-can-consume-more-than-six-times-its-weight-in-wild-fish.html",
+    "byline": null,
+    "country": "ES",
+    "language": "en",
+    "word_count": null,
+    "is_original": 1,
+    "cluster_id": null,
+    "campaign_id": 3,
+    "outlet_id": 2,
+    "outlet": "english.elpais.com",
+    "domain": "english.elpais.com",
+    "tier": "blog",
+    "outlet_country": "ES",
+    "reach_value": null,
+    "reach_source": null,
+    "reach_is_estimated": 0,
+    "import_id": 1,
+    "import_source": "gdelt",
+    "file_name": null,
+    "imported_at": "2026-08-19T15:29:59Z",
+    "imported_by": "github-actions"
+   },
+   "1": {
+    "id": 1,
+    "day_index": null,
+    "published_at": "2026-08-17T00:45:00",
+    "headline": "Việt Nam seafood exports could top $12 billion despite gathering headwinds",
+    "url": "https://vietnamnews.vn/economy/1797622/viet-nam-seafood-exports-could-top-12-billion-despite-gathering-headwinds.html",
+    "byline": null,
+    "country": "VN",
+    "language": "en",
+    "word_count": null,
+    "is_original": 1,
+    "cluster_id": null,
+    "campaign_id": 3,
+    "outlet_id": 1,
+    "outlet": "vietnamnews.vn",
+    "domain": "vietnamnews.vn",
+    "tier": "blog",
+    "outlet_country": "VN",
+    "reach_value": null,
+    "reach_source": null,
+    "reach_is_estimated": 0,
+    "import_id": 1,
+    "import_source": "gdelt",
+    "file_name": null,
+    "imported_at": "2026-08-19T15:29:59Z",
+    "imported_by": "github-actions"
+   }
+  },
   "mentions": {},
   "escalations": {},
-  "outlets": {},
+  "outlets": {
+   "2": {
+    "id": 2,
+    "name": "english.elpais.com",
+    "domain": "english.elpais.com",
+    "country": "ES",
+    "language": "en",
+    "tier": "blog",
+    "reach_value": null,
+    "reach_source": null,
+    "reach_is_estimated": 0,
+    "reach_estimation_method": null,
+    "reach_as_of": null,
+    "is_known_syndication_partner": 0,
+    "notes": null,
+    "created_at": "2026-08-19T15:29:59Z",
+    "created_by": "github-actions"
+   },
+   "3": {
+    "id": 3,
+    "name": "theweek.in",
+    "domain": "theweek.in",
+    "country": "IN",
+    "language": "en",
+    "tier": "blog",
+    "reach_value": null,
+    "reach_source": null,
+    "reach_is_estimated": 0,
+    "reach_estimation_method": null,
+    "reach_as_of": null,
+    "is_known_syndication_partner": 0,
+    "notes": null,
+    "created_at": "2026-08-19T15:29:59Z",
+    "created_by": "github-actions"
+   },
+   "1": {
+    "id": 1,
+    "name": "vietnamnews.vn",
+    "domain": "vietnamnews.vn",
+    "country": "VN",
+    "language": "en",
+    "tier": "blog",
+    "reach_value": null,
+    "reach_source": null,
+    "reach_is_estimated": 0,
+    "reach_estimation_method": null,
+    "reach_as_of": null,
+    "is_known_syndication_partner": 0,
+    "notes": null,
+    "created_at": "2026-08-19T15:29:59Z",
+    "created_by": "github-actions"
+   }
+  },
   "campaigns": {
    "1": {
     "id": 1,
@@ -497,11 +636,11 @@
    "timezone": "America/New_York",
    "themes": "[\"fishmeal\", \"aquaculture\", \"supply_chain\", \"forced_labour\", \"west_africa\", \"china\", \"investigation\"]",
    "notes": "A cross-border investigation into the global fishmeal and aquaculture industries by The Outlaw Ocean Project, reported by more than two dozen journalists across as many countries, covering roughly 1,400 fishmeal plants, the vessels supplying them and where the resulting seafood ends up. Reported findings include fish farms in Xinjiang and Tibet, forced labour in Russia's Far East, the industry's role in Western Sahara, and fish diverted from local consumption into fishmeal plants in The Gambia and Mauritania.\n\nSTATUS: recorded as pre_publication. Preliminary findings were presented to a US congressional hearing in October 2023 and picked up by the trade press, but full publication could not be confirmed. VERIFY THIS before relying on it: if the investigation has published, set the date with\n  cib campaign set-published outlaw-ocean-food-for-feed <date> --status live\nwhich also recomputes day_index across any coverage already imported.\n\nSources: https://theoutlawocean.substack.com/p/the-outlaw-ocean-testifies-before · https://www.seafoodsource.com/news/aquaculture/outlaw-ocean-project-teases-new-aquaculture-investigation-during-congressional-hearing",
-   "article_count": 0,
-   "outlet_count": 0,
+   "article_count": 3,
+   "outlet_count": 3,
    "escalation_count": 0,
    "max_day_index": null,
-   "last_import_at": null
+   "last_import_at": "2026-08-19T15:29:59Z"
   }
  ],
  "campaign_detail": {
@@ -556,7 +695,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "unique_stories": {
        "key": "unique_stories",
@@ -572,7 +711,7 @@
         "story_members": {}
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "unique_outlets": {
        "key": "unique_outlets",
@@ -586,7 +725,7 @@
         "total_articles": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "syndication_ratio": {
        "key": "syndication_ratio",
@@ -603,7 +742,7 @@
        "caveats": [
         "No stories imported, so the ratio is undefined rather than zero."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "tier_mix": {
        "key": "tier_mix",
@@ -618,7 +757,7 @@
         "total_articles": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "country_count": {
        "key": "country_count",
@@ -634,7 +773,7 @@
         "articles_total": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "language_count": {
        "key": "language_count",
@@ -650,7 +789,7 @@
         "articles_total": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "total_reach": {
        "key": "total_reach",
@@ -667,7 +806,7 @@
         "estimated_outlet_ids": []
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "reach_coverage": {
        "key": "reach_coverage",
@@ -682,7 +821,7 @@
         "outlets_total": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "peak_day": {
        "key": "peak_day",
@@ -694,7 +833,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "peak_volume": {
        "key": "peak_volume",
@@ -706,7 +845,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "days_to_peak": {
        "key": "days_to_peak",
@@ -718,7 +857,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "half_life_days": {
        "key": "half_life_days",
@@ -730,7 +869,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "days_to_90pct": {
        "key": "days_to_90pct",
@@ -742,7 +881,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "long_tail": {
        "key": "long_tail",
@@ -756,7 +895,7 @@
         "articles_after_day_30": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "own_company_mentions": {
        "key": "own_company_mentions",
@@ -777,7 +916,7 @@
        "caveats": [
         "No articles imported for this campaign."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "depth_score": {
        "key": "depth_score",
@@ -828,7 +967,7 @@
         "No articles imported for this campaign.",
         "The weighted total is only meaningful alongside its components; both are returned together and the API has no endpoint that returns the total alone."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "first_mention_day": {
        "key": "first_mention_day",
@@ -842,7 +981,7 @@
         "note": "No articles imported for this campaign."
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "competitor_comparison": {
        "key": "competitor_comparison",
@@ -868,7 +1007,7 @@
         "No articles imported for this campaign.",
         "No competitor entities are configured, so this comparison has nothing to compare against."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "escalation_count": {
        "key": "escalation_count",
@@ -888,7 +1027,7 @@
        "caveats": [
         "Nothing has ever been logged to this campaign's escalation log, so a count of zero means 'not recorded', not 'nothing happened'."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "days_to_first_escalation": {
        "key": "days_to_first_escalation",
@@ -902,7 +1041,7 @@
         "log_last_updated": null
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "severity_weighted_total": {
        "key": "severity_weighted_total",
@@ -926,7 +1065,7 @@
        "caveats": [
         "Nothing has ever been logged to this campaign's escalation log, so a count of zero means 'not recorded', not 'nothing happened'."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "escalation_chain": {
        "key": "escalation_chain",
@@ -997,7 +1136,7 @@
        "caveats": [
         "Nothing has ever been logged to this campaign's escalation log, so a count of zero means 'not recorded', not 'nothing happened'."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       }
      },
      "caveats": [
@@ -1075,7 +1214,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "unique_stories": {
        "key": "unique_stories",
@@ -1091,7 +1230,7 @@
         "story_members": {}
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "unique_outlets": {
        "key": "unique_outlets",
@@ -1105,7 +1244,7 @@
         "total_articles": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "syndication_ratio": {
        "key": "syndication_ratio",
@@ -1122,7 +1261,7 @@
        "caveats": [
         "No stories imported, so the ratio is undefined rather than zero."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "tier_mix": {
        "key": "tier_mix",
@@ -1137,7 +1276,7 @@
         "total_articles": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "country_count": {
        "key": "country_count",
@@ -1153,7 +1292,7 @@
         "articles_total": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "language_count": {
        "key": "language_count",
@@ -1169,7 +1308,7 @@
         "articles_total": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "total_reach": {
        "key": "total_reach",
@@ -1186,7 +1325,7 @@
         "estimated_outlet_ids": []
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "reach_coverage": {
        "key": "reach_coverage",
@@ -1201,7 +1340,7 @@
         "outlets_total": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "peak_day": {
        "key": "peak_day",
@@ -1213,7 +1352,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "peak_volume": {
        "key": "peak_volume",
@@ -1225,7 +1364,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "days_to_peak": {
        "key": "days_to_peak",
@@ -1237,7 +1376,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "half_life_days": {
        "key": "half_life_days",
@@ -1249,7 +1388,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "days_to_90pct": {
        "key": "days_to_90pct",
@@ -1261,7 +1400,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "long_tail": {
        "key": "long_tail",
@@ -1275,7 +1414,7 @@
         "articles_after_day_30": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "own_company_mentions": {
        "key": "own_company_mentions",
@@ -1296,7 +1435,7 @@
        "caveats": [
         "No articles imported for this campaign."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "depth_score": {
        "key": "depth_score",
@@ -1347,7 +1486,7 @@
         "No articles imported for this campaign.",
         "The weighted total is only meaningful alongside its components; both are returned together and the API has no endpoint that returns the total alone."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "first_mention_day": {
        "key": "first_mention_day",
@@ -1361,7 +1500,7 @@
         "note": "No articles imported for this campaign."
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "competitor_comparison": {
        "key": "competitor_comparison",
@@ -1387,7 +1526,7 @@
         "No articles imported for this campaign.",
         "No competitor entities are configured, so this comparison has nothing to compare against."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "escalation_count": {
        "key": "escalation_count",
@@ -1407,7 +1546,7 @@
        "caveats": [
         "Nothing has ever been logged to this campaign's escalation log, so a count of zero means 'not recorded', not 'nothing happened'."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "days_to_first_escalation": {
        "key": "days_to_first_escalation",
@@ -1421,7 +1560,7 @@
         "log_last_updated": null
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "severity_weighted_total": {
        "key": "severity_weighted_total",
@@ -1445,7 +1584,7 @@
        "caveats": [
         "Nothing has ever been logged to this campaign's escalation log, so a count of zero means 'not recorded', not 'nothing happened'."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "escalation_chain": {
        "key": "escalation_chain",
@@ -1516,7 +1655,7 @@
        "caveats": [
         "Nothing has ever been logged to this campaign's escalation log, so a count of zero means 'not recorded', not 'nothing happened'."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       }
      },
      "caveats": [
@@ -1567,8 +1706,15 @@
     "created_by": "user:root",
     "is_pre_publication": true
    },
-   "sources": [],
-   "last_import_at": null,
+   "sources": [
+    {
+     "source": "gdelt",
+     "articles": 3,
+     "last_imported_at": "2026-08-19T15:29:59Z",
+     "import_count": 1
+    }
+   ],
+   "last_import_at": "2026-08-19T15:29:59Z",
    "last_snapshot_at": null,
    "precedents": [
     {
@@ -1689,7 +1835,7 @@
          "counts": "One per syndication cluster, plus every article that is in no cluster.",
          "caveat": "A cluster is a judgement made by the deduplication pass. Check the cluster list before quoting this figure in a contested setting."
         },
-        "computed_at": "2026-08-19T14:06:40Z"
+        "computed_at": "2026-08-19T15:30:00Z"
        },
        "unique_outlets": {
         "key": "unique_outlets",
@@ -1710,7 +1856,7 @@
          "counts": "COUNT(DISTINCT outlet_id) across all articles, before clustering.",
          "caveat": ""
         },
-        "computed_at": "2026-08-19T14:06:40Z"
+        "computed_at": "2026-08-19T15:30:00Z"
        },
        "country_count": {
         "key": "country_count",
@@ -1735,7 +1881,7 @@
          "counts": "COUNT(DISTINCT country) over articles, falling back to the outlet's country when the article row has none.",
          "caveat": "Articles with no country on either the article or the outlet are excluded and reported separately as a coverage gap."
         },
-        "computed_at": "2026-08-19T14:06:40Z"
+        "computed_at": "2026-08-19T15:30:00Z"
        },
        "syndication_ratio": {
         "key": "syndication_ratio",
@@ -1760,7 +1906,7 @@
          "counts": "Unique outlets divided by unique stories.",
          "caveat": "A high ratio is wire pickup, not independent interest. It inflates outlet counts without adding newsroom attention."
         },
-        "computed_at": "2026-08-19T14:06:40Z"
+        "computed_at": "2026-08-19T15:30:00Z"
        },
        "escalation_count": {
         "key": "escalation_count",
@@ -1788,7 +1934,7 @@
          "counts": "Escalation rows for the campaign within the day-index cutoff.",
          "caveat": "Manually logged. A zero can mean nothing happened or that nobody logged it; the log's last-updated date is shown alongside."
         },
-        "computed_at": "2026-08-19T14:06:40Z"
+        "computed_at": "2026-08-19T15:30:00Z"
        },
        "severity_weighted_total": {
         "key": "severity_weighted_total",
@@ -1819,7 +1965,7 @@
          "counts": "SUM(severity) across escalations, with the 1-5 anchors listed in the README.",
          "caveat": ""
         },
-        "computed_at": "2026-08-19T14:06:40Z"
+        "computed_at": "2026-08-19T15:30:00Z"
        }
       },
       "data_quality": {
@@ -1872,7 +2018,7 @@
          "counts": "One per syndication cluster, plus every article that is in no cluster.",
          "caveat": "A cluster is a judgement made by the deduplication pass. Check the cluster list before quoting this figure in a contested setting."
         },
-        "computed_at": "2026-08-19T14:06:40Z"
+        "computed_at": "2026-08-19T15:30:00Z"
        },
        "unique_outlets": {
         "key": "unique_outlets",
@@ -1893,7 +2039,7 @@
          "counts": "COUNT(DISTINCT outlet_id) across all articles, before clustering.",
          "caveat": ""
         },
-        "computed_at": "2026-08-19T14:06:40Z"
+        "computed_at": "2026-08-19T15:30:00Z"
        },
        "country_count": {
         "key": "country_count",
@@ -1918,7 +2064,7 @@
          "counts": "COUNT(DISTINCT country) over articles, falling back to the outlet's country when the article row has none.",
          "caveat": "Articles with no country on either the article or the outlet are excluded and reported separately as a coverage gap."
         },
-        "computed_at": "2026-08-19T14:06:40Z"
+        "computed_at": "2026-08-19T15:30:00Z"
        },
        "syndication_ratio": {
         "key": "syndication_ratio",
@@ -1943,7 +2089,7 @@
          "counts": "Unique outlets divided by unique stories.",
          "caveat": "A high ratio is wire pickup, not independent interest. It inflates outlet counts without adding newsroom attention."
         },
-        "computed_at": "2026-08-19T14:06:40Z"
+        "computed_at": "2026-08-19T15:30:00Z"
        },
        "escalation_count": {
         "key": "escalation_count",
@@ -1971,7 +2117,7 @@
          "counts": "Escalation rows for the campaign within the day-index cutoff.",
          "caveat": "Manually logged. A zero can mean nothing happened or that nobody logged it; the log's last-updated date is shown alongside."
         },
-        "computed_at": "2026-08-19T14:06:40Z"
+        "computed_at": "2026-08-19T15:30:00Z"
        },
        "severity_weighted_total": {
         "key": "severity_weighted_total",
@@ -2002,7 +2148,7 @@
          "counts": "SUM(severity) across escalations, with the 1-5 anchors listed in the README.",
          "caveat": ""
         },
-        "computed_at": "2026-08-19T14:06:40Z"
+        "computed_at": "2026-08-19T15:30:00Z"
        }
       },
       "data_quality": {
@@ -2054,7 +2200,7 @@
          "counts": "One per syndication cluster, plus every article that is in no cluster.",
          "caveat": "A cluster is a judgement made by the deduplication pass. Check the cluster list before quoting this figure in a contested setting."
         },
-        "computed_at": "2026-08-19T14:06:40Z"
+        "computed_at": "2026-08-19T15:30:00Z"
        },
        "unique_outlets": {
         "key": "unique_outlets",
@@ -2075,7 +2221,7 @@
          "counts": "COUNT(DISTINCT outlet_id) across all articles, before clustering.",
          "caveat": ""
         },
-        "computed_at": "2026-08-19T14:06:40Z"
+        "computed_at": "2026-08-19T15:30:00Z"
        },
        "country_count": {
         "key": "country_count",
@@ -2100,7 +2246,7 @@
          "counts": "COUNT(DISTINCT country) over articles, falling back to the outlet's country when the article row has none.",
          "caveat": "Articles with no country on either the article or the outlet are excluded and reported separately as a coverage gap."
         },
-        "computed_at": "2026-08-19T14:06:40Z"
+        "computed_at": "2026-08-19T15:30:00Z"
        },
        "syndication_ratio": {
         "key": "syndication_ratio",
@@ -2125,7 +2271,7 @@
          "counts": "Unique outlets divided by unique stories.",
          "caveat": "A high ratio is wire pickup, not independent interest. It inflates outlet counts without adding newsroom attention."
         },
-        "computed_at": "2026-08-19T14:06:40Z"
+        "computed_at": "2026-08-19T15:30:00Z"
        },
        "escalation_count": {
         "key": "escalation_count",
@@ -2153,7 +2299,7 @@
          "counts": "Escalation rows for the campaign within the day-index cutoff.",
          "caveat": "Manually logged. A zero can mean nothing happened or that nobody logged it; the log's last-updated date is shown alongside."
         },
-        "computed_at": "2026-08-19T14:06:40Z"
+        "computed_at": "2026-08-19T15:30:00Z"
        },
        "severity_weighted_total": {
         "key": "severity_weighted_total",
@@ -2184,7 +2330,7 @@
          "counts": "SUM(severity) across escalations, with the 1-5 anchors listed in the README.",
          "caveat": ""
         },
-        "computed_at": "2026-08-19T14:06:40Z"
+        "computed_at": "2026-08-19T15:30:00Z"
        }
       },
       "data_quality": {
@@ -2239,8 +2385,8 @@
       "source_url": null,
       "enabled": 1,
       "promotes_to_live": 0,
-      "last_polled_at": null,
-      "last_error": null,
+      "last_polled_at": "2026-08-19T15:29:42Z",
+      "last_error": "HTTP 403 from https://theoutlawocean.substack.com/feed",
       "hits": 0
      },
      {
@@ -2251,7 +2397,7 @@
       "source_url": null,
       "enabled": 1,
       "promotes_to_live": 0,
-      "last_polled_at": null,
+      "last_polled_at": "2026-08-19T15:29:42Z",
       "last_error": null,
       "hits": 0
      },
@@ -2263,7 +2409,7 @@
       "source_url": null,
       "enabled": 1,
       "promotes_to_live": 0,
-      "last_polled_at": null,
+      "last_polled_at": "2026-08-19T15:29:42Z",
       "last_error": null,
       "hits": 0
      },
@@ -2275,7 +2421,7 @@
       "source_url": null,
       "enabled": 1,
       "promotes_to_live": 0,
-      "last_polled_at": null,
+      "last_polled_at": "2026-08-19T15:29:59Z",
       "last_error": null,
       "hits": 0
      },
@@ -2352,7 +2498,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "unique_stories": {
        "key": "unique_stories",
@@ -2368,7 +2514,7 @@
         "story_members": {}
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "unique_outlets": {
        "key": "unique_outlets",
@@ -2382,7 +2528,7 @@
         "total_articles": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "syndication_ratio": {
        "key": "syndication_ratio",
@@ -2399,7 +2545,7 @@
        "caveats": [
         "No stories imported, so the ratio is undefined rather than zero."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "tier_mix": {
        "key": "tier_mix",
@@ -2414,7 +2560,7 @@
         "total_articles": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "country_count": {
        "key": "country_count",
@@ -2430,7 +2576,7 @@
         "articles_total": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "language_count": {
        "key": "language_count",
@@ -2446,7 +2592,7 @@
         "articles_total": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "total_reach": {
        "key": "total_reach",
@@ -2463,7 +2609,7 @@
         "estimated_outlet_ids": []
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "reach_coverage": {
        "key": "reach_coverage",
@@ -2478,7 +2624,7 @@
         "outlets_total": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "peak_day": {
        "key": "peak_day",
@@ -2490,7 +2636,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "peak_volume": {
        "key": "peak_volume",
@@ -2502,7 +2648,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "days_to_peak": {
        "key": "days_to_peak",
@@ -2514,7 +2660,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "half_life_days": {
        "key": "half_life_days",
@@ -2526,7 +2672,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "days_to_90pct": {
        "key": "days_to_90pct",
@@ -2538,7 +2684,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "long_tail": {
        "key": "long_tail",
@@ -2552,7 +2698,7 @@
         "articles_after_day_30": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "own_company_mentions": {
        "key": "own_company_mentions",
@@ -2573,7 +2719,7 @@
        "caveats": [
         "No articles imported for this campaign."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "depth_score": {
        "key": "depth_score",
@@ -2624,7 +2770,7 @@
         "No articles imported for this campaign.",
         "The weighted total is only meaningful alongside its components; both are returned together and the API has no endpoint that returns the total alone."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "first_mention_day": {
        "key": "first_mention_day",
@@ -2638,7 +2784,7 @@
         "note": "No articles imported for this campaign."
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "competitor_comparison": {
        "key": "competitor_comparison",
@@ -2664,7 +2810,7 @@
         "No articles imported for this campaign.",
         "No competitor entities are configured, so this comparison has nothing to compare against."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "escalation_count": {
        "key": "escalation_count",
@@ -2684,7 +2830,7 @@
        "caveats": [
         "Nothing has ever been logged to this campaign's escalation log, so a count of zero means 'not recorded', not 'nothing happened'."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "days_to_first_escalation": {
        "key": "days_to_first_escalation",
@@ -2698,7 +2844,7 @@
         "log_last_updated": null
        },
        "caveats": [],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "severity_weighted_total": {
        "key": "severity_weighted_total",
@@ -2722,7 +2868,7 @@
        "caveats": [
         "Nothing has ever been logged to this campaign's escalation log, so a count of zero means 'not recorded', not 'nothing happened'."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       },
       "escalation_chain": {
        "key": "escalation_chain",
@@ -2793,7 +2939,7 @@
        "caveats": [
         "Nothing has ever been logged to this campaign's escalation log, so a count of zero means 'not recorded', not 'nothing happened'."
        ],
-       "computed_at": "2026-08-19T14:06:40Z"
+       "computed_at": "2026-08-19T15:30:00Z"
       }
      },
      "caveats": [
@@ -3282,12 +3428,82 @@
   }
  },
  "outlets": {
-  "outlets": [],
-  "count": 0,
+  "outlets": [
+   {
+    "id": 2,
+    "name": "english.elpais.com",
+    "domain": "english.elpais.com",
+    "country": "ES",
+    "language": "en",
+    "tier": "blog",
+    "reach_value": null,
+    "reach_source": null,
+    "reach_is_estimated": 0,
+    "reach_estimation_method": null,
+    "reach_as_of": null,
+    "is_known_syndication_partner": 0,
+    "notes": null,
+    "created_at": "2026-08-19T15:29:59Z",
+    "created_by": "github-actions",
+    "articles": 1
+   },
+   {
+    "id": 3,
+    "name": "theweek.in",
+    "domain": "theweek.in",
+    "country": "IN",
+    "language": "en",
+    "tier": "blog",
+    "reach_value": null,
+    "reach_source": null,
+    "reach_is_estimated": 0,
+    "reach_estimation_method": null,
+    "reach_as_of": null,
+    "is_known_syndication_partner": 0,
+    "notes": null,
+    "created_at": "2026-08-19T15:29:59Z",
+    "created_by": "github-actions",
+    "articles": 1
+   },
+   {
+    "id": 1,
+    "name": "vietnamnews.vn",
+    "domain": "vietnamnews.vn",
+    "country": "VN",
+    "language": "en",
+    "tier": "blog",
+    "reach_value": null,
+    "reach_source": null,
+    "reach_is_estimated": 0,
+    "reach_estimation_method": null,
+    "reach_as_of": null,
+    "is_known_syndication_partner": 0,
+    "notes": null,
+    "created_at": "2026-08-19T15:29:59Z",
+    "created_by": "github-actions",
+    "articles": 1
+   }
+  ],
+  "count": 3,
   "with_sourced_reach": 0,
-  "reach_coverage_pct": null
+  "reach_coverage_pct": 0.0
  },
- "imports": [],
+ "imports": [
+  {
+   "id": 1,
+   "source": "gdelt",
+   "file_name": null,
+   "file_hash": null,
+   "imported_at": "2026-08-19T15:29:59Z",
+   "row_count": 3,
+   "rows_inserted": 3,
+   "rows_skipped_duplicate": 0,
+   "rows_rejected": 0,
+   "mapping": "{\"api\": \"gdelt_doc_2.0\", \"query\": \"\\\"fishmeal\\\" (\\\"aquaculture\\\" OR \\\"fish feed\\\")\", \"start\": \"20260812152942\", \"end\": \"20260819152942\"}",
+   "notes": "GDELT DOC 2.0 query '\"fishmeal\" (\"aquaculture\" OR \"fish feed\")' from 20260812152942 to 20260819152942; 3 records returned (API cap is 250 per call). GDELT supplies no article body, so these rows cannot be scanned for entity mentions. Timestamps are GDELT's crawl time, which can lag the outlet's own publication time. Country is mapped from GDELT's country names to ISO alpha-2; unmapped ones are left blank and show up in the data-quality gap rather than as a wrong country.",
+   "created_by": "github-actions"
+  }
+ ],
  "watch": {
   "rules": [
    {
@@ -3299,8 +3515,8 @@
     "source_url": null,
     "enabled": 1,
     "promotes_to_live": 0,
-    "last_polled_at": null,
-    "last_error": null,
+    "last_polled_at": "2026-08-19T15:29:42Z",
+    "last_error": "HTTP 403 from https://theoutlawocean.substack.com/feed",
     "notes": "Substack publishes an RSS feed at /feed. Detection only — not marked promotes_to_live, because the newsletter carries plenty of posts that are not this investigation and one of them should not set the campaign's day zero.",
     "created_at": "2026-08-19T14:06:40Z",
     "created_by": "user:root",
@@ -3316,7 +3532,7 @@
     "source_url": null,
     "enabled": 1,
     "promotes_to_live": 0,
-    "last_polled_at": null,
+    "last_polled_at": "2026-08-19T15:29:42Z",
     "last_error": null,
     "notes": "Content rule, applied to whichever feeds are enabled for this campaign.",
     "created_at": "2026-08-19T14:06:40Z",
@@ -3333,7 +3549,7 @@
     "source_url": null,
     "enabled": 1,
     "promotes_to_live": 0,
-    "last_polled_at": null,
+    "last_polled_at": "2026-08-19T15:29:42Z",
     "last_error": null,
     "notes": "The Outlaw Ocean Project's founder and lead reporter. Confirm the actual byline on the investigation when it lands — it may be a team credit.",
     "created_at": "2026-08-19T14:06:40Z",
@@ -3350,7 +3566,7 @@
     "source_url": null,
     "enabled": 1,
     "promotes_to_live": 0,
-    "last_polled_at": null,
+    "last_polled_at": "2026-08-19T15:29:59Z",
     "last_error": null,
     "notes": "Automated coverage ingest via `cib ingest`. Needs no API key. Gives cross-country volume within minutes of a story breaking, but no article body, so these rows cannot be scanned for entity mentions.",
     "created_at": "2026-08-19T14:06:40Z",
@@ -3380,9 +3596,20 @@
   "status": {
    "rules_total": 5,
    "rules_enabled": 4,
-   "rules_with_errors": [],
-   "last_run": null,
-   "note": "No poll run recorded. Nothing is being watched: schedule `cib watch poll`, or run `cib watch run`."
+   "rules_with_errors": [
+    "The Outlaw Ocean Project — Substack feed"
+   ],
+   "last_run": {
+    "id": 1,
+    "started_at": "2026-08-19T15:29:41Z",
+    "finished_at": "2026-08-19T15:29:42Z",
+    "rules_polled": 3,
+    "hits_new": 0,
+    "errors": 1,
+    "detail": null,
+    "created_by": "github-actions"
+   },
+   "note": ""
   }
  },
  "static_assets": [
