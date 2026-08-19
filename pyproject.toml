@@ -1,0 +1,47 @@
+[project]
+name = "campaign-impact-benchmarker"
+version = "0.1.0"
+description = "Measures and compares the media footprint of external campaigns and investigations."
+requires-python = ">=3.11"
+# The core tool (migrations, import, dedup, metrics, compare, CLI) is stdlib-only by design:
+# it must run with no cloud dependency and no third-party install.
+dependencies = []
+
+[project.optional-dependencies]
+api = ["fastapi>=0.115", "uvicorn[standard]>=0.32"]
+ingest = ["openpyxl>=3.1", "requests>=2.31"]
+watch = ["apscheduler>=3.10", "requests>=2.31"]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[project.scripts]
+cib = "cib.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["backend"]
+include = ["cib*"]
+
+[tool.setuptools.package-data]
+cib = ["migrations/*.sql"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["backend"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "C4", "RUF"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"backend/tests/*" = ["B011", "E402"]
+# Depends()/Query() in argument defaults is FastAPI's documented idiom, not a mistake.
+"backend/cib/api/*" = ["B008"]
+
+[tool.pytest.ini_options]
+testpaths = ["backend/tests"]
+pythonpath = ["backend"]
+addopts = "-q"
