@@ -17,6 +17,44 @@ from .http import get_json
 
 DOC_API = "https://api.gdeltproject.org/api/v2/doc/doc"
 
+# GDELT reports `sourcecountry` as a full country name ("Denmark"), while every other source in
+# this tool stores ISO 3166-1 alpha-2 ("DK"). Passing the name straight through would make the
+# country count treat "Denmark" and "DK" as two different countries and silently inflate a
+# headline metric, so names are mapped here. Anything unmapped becomes NULL and is reported as a
+# coverage gap by the data-quality figures — a missing country is recoverable, a wrong one is not.
+_COUNTRIES = {
+    # Nordics and the rest of Europe
+    "Denmark": "DK", "Norway": "NO", "Sweden": "SE", "Finland": "FI", "Iceland": "IS",
+    "United Kingdom": "GB", "Ireland": "IE", "Netherlands": "NL", "Belgium": "BE",
+    "Germany": "DE", "France": "FR", "Spain": "ES", "Portugal": "PT", "Italy": "IT",
+    "Poland": "PL", "Switzerland": "CH", "Austria": "AT", "Greece": "GR", "Russia": "RU",
+    "Ukraine": "UA", "Turkey": "TR", "Estonia": "EE", "Latvia": "LV", "Lithuania": "LT",
+    # Americas
+    "United States": "US", "Canada": "CA", "Mexico": "MX", "Brazil": "BR", "Chile": "CL",
+    "Peru": "PE", "Argentina": "AR", "Ecuador": "EC", "Colombia": "CO",
+    # West Africa and the wider fishmeal supply chain
+    "Mauritania": "MR", "Senegal": "SN", "Gambia": "GM", "Morocco": "MA", "Ghana": "GH",
+    "Nigeria": "NG", "Ivory Coast": "CI", "Guinea": "GN", "Guinea-Bissau": "GW",
+    "Sierra Leone": "SL", "Liberia": "LR", "Namibia": "NA", "South Africa": "ZA",
+    "Angola": "AO", "Egypt": "EG", "Kenya": "KE", "Tanzania": "TZ",
+    # Asia-Pacific
+    "China": "CN", "Japan": "JP", "South Korea": "KR", "India": "IN", "Vietnam": "VN",
+    "Thailand": "TH", "Indonesia": "ID", "Philippines": "PH", "Malaysia": "MY",
+    "Bangladesh": "BD", "Australia": "AU", "New Zealand": "NZ", "Singapore": "SG",
+}
+
+
+def country_code(name: str | None) -> str | None:
+    """GDELT country name to ISO 3166-1 alpha-2. None when unmapped, never a guess."""
+    if not name:
+        return None
+    cleaned = name.strip()
+    # Tolerate a value that is already an ISO code, in case the API's shape changes.
+    if len(cleaned) == 2 and cleaned.isalpha() and cleaned.isupper():
+        return cleaned
+    return _COUNTRIES.get(cleaned)
+
+
 # GDELT's own language names, mapped to ISO 639-1 where unambiguous.
 _LANGUAGES = {
     "English": "en", "Danish": "da", "German": "de", "French": "fr", "Spanish": "es",
@@ -60,7 +98,7 @@ def to_rows(articles: list[dict]) -> list[dict]:
             "url": a.get("url"),
             "outlet_name": a.get("domain"),
             "outlet_domain": a.get("domain"),
-            "country": a.get("sourcecountry") or None,
+            "country": country_code(a.get("sourcecountry")),
             "language": _LANGUAGES.get(a.get("language")),
             "byline": None,
             "body_text": None,   # GDELT returns no full text. Never fabricate one.
@@ -86,7 +124,9 @@ def import_query(
         + (f" to {end}" if end else "")
         + f"; {len(articles)} records returned (API cap is 250 per call). "
         "GDELT supplies no article body, so these rows cannot be scanned for entity mentions. "
-        "Timestamps are GDELT's crawl time, which can lag the outlet's own publication time."
+        "Timestamps are GDELT's crawl time, which can lag the outlet's own publication time. "
+        "Country is mapped from GDELT's country names to ISO alpha-2; unmapped ones are left "
+        "blank and show up in the data-quality gap rather than as a wrong country."
     )
     return run_import(
         conn, campaign_ref=campaign_ref, source="gdelt", rows=rows,

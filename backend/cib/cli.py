@@ -240,6 +240,38 @@ def cmd_import_mediacloud(args) -> int:
     return 0
 
 
+def cmd_ingest(args) -> int:
+    conn = _open(args)
+    from .ingest import scheduled
+
+    with transaction(conn):
+        report = scheduled.run(
+            conn, lookback_days=args.lookback_days, rule_ids=args.rule, dry_run=args.dry_run
+        )
+        clustered = {} if args.dry_run else scheduled.cluster_and_reindex(conn, report)
+
+    print(report.summary())
+    for result in report.results:
+        state = f"ERROR {result.error}" if result.error else (
+            f"{result.inserted} new / {result.duplicates} already present "
+            f"/ {result.rejected} rejected of {result.rows_seen}"
+        )
+        print(f"  [{result.source}] {result.rule_name} -> {result.campaign_slug}: {state}")
+        if result.hit_record_cap:
+            print(f"      hit the {scheduled.GDELT_MAX_RECORDS}-record API cap for "
+                  f"{result.window_start}..{result.window_end}. Coverage was dropped — run more "
+                  "often, or narrow the query.")
+    for note in report.skipped:
+        print(f"  skipped: {note}")
+    if clustered:
+        print(f"  re-clustered: {clustered}")
+    if not report.results and not report.skipped:
+        print("  No enabled rule names an automated source. Add one with:\n"
+              "    cib watch add --type gdelt_query --pattern '\"your query\"' --campaign <slug> "
+              "--name 'GDELT'")
+    return 0
+
+
 def cmd_import_list(args) -> int:
     conn = _open(args)
     rows = import_repo.list_all(conn, args.limit)
@@ -758,6 +790,18 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--collection")
     p.add_argument("--limit", type=int, default=1000)
     p.set_defaults(func=cmd_import_mediacloud)
+
+    p = sub.add_parser(
+        "ingest",
+        help="Import from every enabled watch rule that names an automated source (GDELT, "
+             "opted-in feeds). This is what the scheduled workflow runs.",
+    )
+    p.add_argument("--lookback-days", type=int, default=7,
+                   help="How far back to fetch when a rule has never run (default: 7)")
+    p.add_argument("--rule", type=int, action="append", help="Only these rule ids")
+    p.add_argument("--dry-run", action="store_true",
+                   help="Report what would be fetched without calling any API")
+    p.set_defaults(func=cmd_ingest)
 
     p = imp.add_parser("list", help="Show the import ledger")
     p.add_argument("--limit", type=int, default=50)

@@ -60,18 +60,36 @@ def set_enabled(conn: sqlite3.Connection, rule_id: int, enabled: bool) -> None:
 
 
 def mark_polled(conn: sqlite3.Connection, rule_id: int, error: str | None = None) -> None:
+    """Record a completed poll. Advances the watermark."""
     conn.execute("UPDATE watch_rules SET last_polled_at = ?, last_error = ? WHERE id = ?",
                  (now_utc(), error, rule_id))
+
+
+def mark_failed(conn: sqlite3.Connection, rule_id: int, error: str) -> None:
+    """Record a failure *without* advancing the watermark.
+
+    `cib ingest` uses `last_polled_at` as the "coverage fetched up to here" mark. Advancing it
+    after a failed fetch would skip that window forever, leaving a hole in the campaign's coverage
+    that nothing would ever notice.
+    """
+    conn.execute("UPDATE watch_rules SET last_error = ? WHERE id = ?", (error, rule_id))
 
 
 def matches(rule: WatchRule, *, title: str | None, url: str | None,
             author: str | None = None, summary: str | None = None) -> bool:
     """Does one feed item satisfy one rule?
 
-    Feed-shaped rules (rss, sitemap, gdelt_query) match every item their own feed returns — the
-    feed *is* the filter. Content rules test the item's text.
+    Feed-shaped rules (rss, sitemap) match every item their own feed returns — the feed *is* the
+    filter. Content rules test the item's text.
+
+    `gdelt_query` rules are never evaluated here. They have no feed of their own, so they used to
+    fall through to their campaign's sibling RSS feeds and then match every item in them — hitting
+    on unrelated stories, and, for a rule marked promotes_to_live, setting a campaign's day zero
+    off one. They are driven by `cib ingest` instead, which queries GDELT directly.
     """
-    if rule.rule_type in ("rss", "sitemap", "gdelt_query"):
+    if rule.rule_type == "gdelt_query":
+        return False
+    if rule.rule_type in ("rss", "sitemap"):
         return True
     pattern = normalise(rule.pattern)
     if not pattern:

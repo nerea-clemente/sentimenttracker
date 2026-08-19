@@ -73,10 +73,19 @@ jobs:
       # ----- pipeline -----
       - name: Poll watch rules
         if: env.RUN_PIPELINE == 'true'
-        # Disabled rules are skipped, so this is a no-op until real feeds are configured.
-        # `|| true` because an unreachable feed is recorded on the rule, not a reason to fail
-        # the deploy.
+        # Detects publication. Disabled rules are skipped, so this is a no-op until real feeds
+        # are configured. `|| true` because an unreachable feed is recorded on the rule, not a
+        # reason to fail the deploy.
         run: python -m cib.cli watch poll --no-notify || true
+
+      - name: Ingest coverage from automated sources
+        if: env.RUN_PIPELINE == 'true'
+        # Detection is not measurement: polling records that something published, this brings the
+        # coverage in. Runs every enabled gdelt_query rule (no API key needed) and any feed rule
+        # that opts in. Archive exports stay manual — they are licensed and cannot be fetched.
+        env:
+          MEDIACLOUD_API_KEY: ${{ secrets.MEDIACLOUD_API_KEY }}
+        run: python -m cib.cli --as "github-actions" ingest --lookback-days 7 || true
 
       - name: Rebuild daily snapshots
         if: env.RUN_PIPELINE == 'true'

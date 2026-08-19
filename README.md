@@ -323,6 +323,45 @@ Rule types: `keyword`, `phrase`, `byline`, `domain`, `rss`, `sitemap`, `gdelt_qu
 
 ---
 
+## Automated ingestion
+
+Archive coverage is licensed and arrives by hand. Everything else can be pulled on a schedule.
+
+```bash
+# Tell the tool what to watch for, per campaign
+cib watch add --campaign c2019 --name "GDELT: fishmeal" \
+    --type gdelt_query --pattern '"fishmeal" "aquaculture"'
+
+cib ingest --dry-run    # what would be fetched, calling no API
+cib ingest              # import it
+```
+
+`cib ingest` is what the scheduled workflow runs. For every **enabled** rule naming an automated
+source it fetches the window since that rule last ran and imports it into the rule's campaign,
+then re-clusters anything that changed.
+
+**Detection and measurement are separate jobs.** `cib watch poll` records that something published
+and can set a campaign's day zero; it does not bring the coverage in. `cib ingest` does that. A
+feed rule is treated as detection-only unless its notes contain the word `ingest`, because
+importing everything a publisher's feed carries would bury a campaign in unrelated articles.
+
+Things it does deliberately:
+
+- **The watermark advances only on success.** A failed fetch keeps its window so the next run
+  re-fetches it, rather than leaving a hole nothing would ever notice.
+- **Windows overlap by 24 hours**, because GDELT's crawl time lags publication. Re-importing is
+  free — articles are keyed by `(campaign, url)`.
+- **A dormant rule cannot ask for an unbounded window.** `--lookback-days` is a hard floor, so a
+  rule idle for a year requests a week rather than a year of which GDELT would return an
+  arbitrary 250 articles.
+- **Hitting GDELT's 250-record cap is reported**, because a capped response means coverage was
+  silently dropped.
+- **GDELT country names are mapped to ISO alpha-2.** GDELT says `Denmark`; everything else here
+  stores `DK`. An unmapped country becomes null and shows up in the data-quality gap — a missing
+  country is recoverable, a wrong one quietly inflates the country count.
+- **GDELT supplies no article body**, so those rows cannot be scanned for entity mentions and the
+  exposure metrics report that as a floor rather than assuming zero.
+
 ## Exports
 
 ```bash
@@ -348,6 +387,7 @@ import provenance. The HTML version is fully self-contained and prints.
 cib init | seed
 cib campaign list | add | set-published | precedent
 cib import inspect | csv | infomedia | factiva | nexis | feed | gdelt | mediacloud | list
+cib ingest [--dry-run] [--lookback-days N]
 cib cluster <campaign>
 cib entity add | list | match
 cib escalation add | verify | list

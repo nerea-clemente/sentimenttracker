@@ -97,6 +97,10 @@ def poll_once(conn: sqlite3.Connection, rule_ids: list[int] | None = None,
     feed_cache: dict[str, list] = {}
 
     for rule in active:
+        if rule.rule_type == "gdelt_query":
+            # Driven by `cib ingest`, which queries the GDELT API. Polling it here would apply it
+            # to whatever RSS feeds the campaign happens to watch.
+            continue
         report.rules_polled += 1
         error: str | None = None
         for feed_url in _feed_urls(conn, rule):
