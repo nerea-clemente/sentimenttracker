@@ -359,6 +359,29 @@ export const api: typeof liveApi = (() => {
   return { ...liveApi, ...staticApi, exportUrls: liveApi.exportUrls } as typeof liveApi;
 })();
 
+export interface SetupFinding {
+  level: "blocker" | "warning" | "ok";
+  code: string;
+  title: string;
+  detail: string;
+  fix: string | null;
+}
+
+export interface SetupReport {
+  findings: SetupFinding[];
+  blockers: number;
+  warnings: number;
+  ok: number;
+}
+
+/** Setup findings baked into the snapshot. Null in live mode, where the CLI is at hand. */
+export function snapshotSetup(): SetupReport | null {
+  if (!IS_STATIC) return null;
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { seed } = require("./static-api") as typeof import("./static-api");
+  return (seed as unknown as { setup?: SetupReport }).setup ?? null;
+}
+
 /** Snapshot metadata for the banner. Null in live mode. */
 export function snapshotInfo(): { generated_at: string; warnings: string[] } | null {
   if (!IS_STATIC) return null;

@@ -323,6 +323,68 @@ Rule types: `keyword`, `phrase`, `byline`, `domain`, `rss`, `sitemap`, `gdelt_qu
 
 ---
 
+## Is it actually set up?
+
+`cib seed` creates placeholders rather than inventing data, which means a fresh install looks like
+a working tool that measures nothing. One command tells you what is still scaffolding, what each
+gap costs you, and how to fix it:
+
+```bash
+cib doctor            # human-readable
+cib doctor --json     # machine-readable
+cib doctor --strict   # exit 1 if any blocker remains (for CI)
+```
+
+```
+BLOCKER (6) — cannot produce a measurement until these are fixed
+  2 campaign(s) have a stand-in publication date
+      Every day_index is measured from published_at, so every comparison is
+      measured against the wrong day zero until this is corrected.
+      fix: cib campaign set-published <slug> <date>   # do this BEFORE importing coverage
+  ...
+```
+
+Findings are graded by consequence, not tidiness. A **blocker** means a metric cannot be produced
+at all or would be measured against the wrong thing; a **warning** means figures are produced but
+incomplete, or something that should be watched is not. Anything checked and healthy is reported
+as **ok**, so the absence of a finding is never mistaken for "not checked".
+
+The same findings are baked into the dashboard snapshot and shown on the **Data quality** page, so
+someone who opens the site and finds it empty is told why on the page rather than left to guess.
+The scheduled workflow prints them too, so a run that produced nothing says so instead of looking
+healthy.
+
+## Alerting
+
+For a campaign whose whole purpose is catching day zero, an alert nobody receives is a silent
+failure. Channels are set with `CIB_NOTIFY_CHANNELS` (`stdout`, `file`, `webhook`, `email`) and
+their settings in `.env` — see `.env.example`.
+
+Prove the path works before you need it:
+
+```bash
+cib watch test-alert
+```
+
+It reports each configured channel as ready or explains exactly what it is missing, and refuses to
+send through a channel that cannot deliver unless you pass `--force`.
+
+In the scheduled workflow, notifications are **on**: a scheduled run is precisely when nobody is
+watching. Set the delivery details as repository secrets and `CIB_NOTIFY_CHANNELS` as a repository
+variable:
+
+| Name | Kind | For |
+|---|---|---|
+| `CIB_NOTIFY_CHANNELS` | variable | e.g. `webhook`, or `webhook,email` |
+| `CIB_NOTIFY_WEBHOOK_URL` | secret | Slack/Teams incoming webhook |
+| `CIB_SMTP_HOST` / `CIB_SMTP_USER` / `CIB_SMTP_PASSWORD` | secret | email channel |
+| `CIB_NOTIFY_EMAIL_FROM` / `CIB_NOTIFY_EMAIL_TO` | secret | email channel |
+| `MEDIACLOUD_API_KEY` | secret | optional Media Cloud ingestion |
+
+With none of these set the channel falls back to `stdout` — which in a scheduled run means the
+alert lands in a log nobody reads. `cib doctor` reports that as a warning rather than pretending
+it is monitoring.
+
 ## Automated ingestion
 
 Archive coverage is licensed and arrives by hand. Everything else can be pulled on a schedule.
@@ -396,8 +458,9 @@ cib outlet list | reach
 cib metrics <campaign> [--at-day N]
 cib compare <campaign> <campaign> [--at-day N]
 cib definitions
+cib doctor [--strict]
 cib snapshot [--all]
-cib watch list | add | enable | poll | hits | run
+cib watch list | add | enable | poll | hits | test-alert | run
 cib export comparison|articles|escalations|mentions|briefing
 cib serve
 ```

@@ -609,6 +609,80 @@ def cmd_watch_poll(args) -> int:
     return 0
 
 
+def cmd_watch_test_alert(args) -> int:
+    """Prove the alert path works before relying on it to catch day zero."""
+    from .watch.notify import Alert, describe_channels, send
+
+    described = describe_channels(args.channels)
+    if not described:
+        print("No channels configured. Set CIB_NOTIFY_CHANNELS in .env.")
+        return 1
+
+    print("Configured channels:")
+    for name, usable, note in described:
+        print(f"  {'OK  ' if usable else 'FAIL'} {name:<9} {note}")
+
+    unusable = [n for n, usable, _ in described if not usable]
+    if unusable and not args.force:
+        print(f"\nNot sending: {', '.join(unusable)} cannot deliver. Fix the settings above, "
+              "or pass --force to try anyway.")
+        return 1
+
+    print("\nSending a test alert…")
+    outcome = send(Alert(
+        title="Campaign Impact Benchmarker — test alert",
+        body="If you are reading this, watch-hit alerts will reach you. "
+             "This message was sent by `cib watch test-alert` and is not a real hit.",
+        rule_name="test-alert",
+    ), args.channels)
+    for name, result in outcome.items():
+        print(f"  {name}: {result}")
+    return 0 if all(r == "sent" for r in outcome.values()) else 1
+
+
+def cmd_doctor(args) -> int:
+    conn = _open(args)
+    from . import doctor
+
+    report = doctor.run(conn)
+    if args.json:
+        _print_json(report.to_dict())
+        return 1 if (args.strict and report.blockers) else 0
+
+    labels = {"blocker": "BLOCKER", "warning": "WARNING", "ok": "OK"}
+    for level in ("blocker", "warning", "ok"):
+        findings = report.of(level)
+        if not findings:
+            continue
+        heading = {
+            "blocker": "cannot produce a measurement until these are fixed",
+            "warning": "figures will be incomplete, or something is unmonitored",
+            "ok": "checked and healthy",
+        }[level]
+        print(f"\n{labels[level]} ({len(findings)}) — {heading}")
+        print("-" * 78)
+        for f in findings:
+            print(f"  {f.title}")
+            if f.detail:
+                for line in _wrap(f.detail, 74):
+                    print(f"      {line}")
+            if f.fix:
+                print(f"      fix: {f.fix}")
+            print()
+
+    print(f"{len(report.blockers)} blocker(s), {len(report.warnings)} warning(s), "
+          f"{len(report.of('ok'))} ok.")
+    if report.blockers:
+        print("\nThe blockers above are the difference between a tool that runs and a tool that "
+              "measures something.")
+    return 1 if (args.strict and report.blockers) else 0
+
+
+def _wrap(text: str, width: int) -> list[str]:
+    import textwrap
+    return textwrap.wrap(text, width) or [""]
+
+
 def cmd_watch_hits(args) -> int:
     conn = _open(args)
     from .watch import rules as rule_repo
@@ -902,6 +976,14 @@ def build_parser() -> argparse.ArgumentParser:
                    help="Day-index cutoff. Omitted: the shortest observed window is used.")
     p.set_defaults(func=cmd_compare)
 
+    p = sub.add_parser(
+        "doctor",
+        help="Report what is still a placeholder or misconfigured, and how to fix each",
+    )
+    p.add_argument("--strict", action="store_true",
+                   help="Exit non-zero if any blocker is found (for CI)")
+    p.set_defaults(func=cmd_doctor)
+
     sub.add_parser("definitions", help="Print every metric's plain-language definition"
                    ).set_defaults(func=cmd_definitions)
 
@@ -938,6 +1020,13 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--rule", type=int, action="append", help="Poll only these rule ids")
     p.add_argument("--no-notify", action="store_true")
     p.set_defaults(func=cmd_watch_poll)
+
+    p = watch.add_parser("test-alert",
+                         help="Send a test alert, to prove the channel works before you need it")
+    p.add_argument("--channels", help="Override CIB_NOTIFY_CHANNELS for this test")
+    p.add_argument("--force", action="store_true",
+                   help="Send even if a channel looks unconfigured")
+    p.set_defaults(func=cmd_watch_test_alert)
 
     p = watch.add_parser("hits", help="Recent watch hits")
     p.add_argument("--campaign")

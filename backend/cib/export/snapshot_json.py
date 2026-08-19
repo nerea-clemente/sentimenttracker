@@ -28,6 +28,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from .. import doctor
 from ..actor import actor, now_utc
 from ..config import REPO_ROOT
 from ..db import connect, query, query_one
@@ -382,6 +383,9 @@ def build_payload(conn: sqlite3.Connection,
             "comparisons_baked": len(comparisons),
         },
         "cutoffs": [cutoff_key(c) for c in (None, *cutoffs)],
+        # The same findings `cib doctor` prints. A reader who opens the dashboard and finds it
+        # empty should be told why on the page, not left to guess.
+        "setup": doctor.run(conn).to_dict(),
         "evidence": _evidence_index(conn),
         "campaigns": _campaign_summaries(conn),
         "campaign_detail": detail,

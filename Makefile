@@ -1,4 +1,4 @@
-.PHONY: setup test lint fix seed api web dev docs docs-check snapshot demo-db demo-snapshot site clean
+.PHONY: setup test lint fix seed doctor api web dev docs docs-check snapshot demo-db demo-snapshot site site-serve clean
 
 VENV := .venv
 PY   := $(VENV)/bin/python
@@ -20,6 +20,9 @@ lint:                        ## Lint
 
 fix:                         ## Lint and auto-fix
 	$(VENV)/bin/ruff check --fix backend/
+
+doctor:                      ## Report what is still a placeholder and how to fix it
+	CIB_DB_PATH=state/cib.sqlite3 $(VENV)/bin/cib doctor
 
 seed:                        ## Create the three placeholder campaign records
 	$(VENV)/bin/cib seed

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { api, formatDate, type CampaignSummary } from "@/lib/api";
 import { ErrorBanner, Loading } from "@/components/Loading";
+import { SetupChecklist } from "@/components/SetupChecklist";
 
 /**
  * Data quality across the whole database.
@@ -38,6 +39,8 @@ export default function DataQualityPage() {
         Which figures can be quoted and which cannot. Every gap here is a limit on what the
         comparison view is entitled to claim.
       </p>
+
+      <SetupChecklist />
 
       <h2>Reach coverage</h2>
       <div

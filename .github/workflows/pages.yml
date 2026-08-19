@@ -73,10 +73,24 @@ jobs:
       # ----- pipeline -----
       - name: Poll watch rules
         if: env.RUN_PIPELINE == 'true'
-        # Detects publication. Disabled rules are skipped, so this is a no-op until real feeds
-        # are configured. `|| true` because an unreachable feed is recorded on the rule, not a
-        # reason to fail the deploy.
-        run: python -m cib.cli watch poll --no-notify || true
+        # Detects publication and alerts on a hit. Disabled rules are skipped, so this is a no-op
+        # until real feeds are configured. `|| true` because an unreachable feed is recorded on
+        # the rule, not a reason to fail the deploy.
+        #
+        # Notifications are ON here: a scheduled run is exactly when nobody is watching, so a hit
+        # that only printed to this log would be a silent miss. With no secrets set the channel
+        # falls back to stdout, which `cib doctor` reports as a warning rather than pretending it
+        # is monitoring.
+        env:
+          CIB_NOTIFY_CHANNELS: ${{ vars.CIB_NOTIFY_CHANNELS || 'stdout' }}
+          CIB_NOTIFY_WEBHOOK_URL: ${{ secrets.CIB_NOTIFY_WEBHOOK_URL }}
+          CIB_SMTP_HOST: ${{ secrets.CIB_SMTP_HOST }}
+          CIB_SMTP_PORT: ${{ vars.CIB_SMTP_PORT || '587' }}
+          CIB_SMTP_USER: ${{ secrets.CIB_SMTP_USER }}
+          CIB_SMTP_PASSWORD: ${{ secrets.CIB_SMTP_PASSWORD }}
+          CIB_NOTIFY_EMAIL_FROM: ${{ secrets.CIB_NOTIFY_EMAIL_FROM }}
+          CIB_NOTIFY_EMAIL_TO: ${{ secrets.CIB_NOTIFY_EMAIL_TO }}
+        run: python -m cib.cli --as "github-actions" watch poll || true
 
       - name: Ingest coverage from automated sources
         if: env.RUN_PIPELINE == 'true'
@@ -104,6 +118,12 @@ jobs:
               print(f'{table:14}', conn.execute(f'SELECT COUNT(*) FROM {table}').fetchone()[0])
           "
           echo "::endgroup::"
+
+      - name: Setup check
+        if: env.RUN_PIPELINE == 'true'
+        # Informational, never fatal. Prints exactly what is still a placeholder so a run that
+        # produced nothing says why, instead of looking healthy.
+        run: python -m cib.cli doctor || true
 
       - name: Export dashboard snapshot
         run: python -m cib.cli --as "github-actions" export snapshot

@@ -91,6 +91,38 @@ def _email(alert: Alert) -> None:
 
 CHANNELS = {"stdout": _stdout, "file": _file, "webhook": _webhook, "email": _email}
 
+# What each channel needs before it can deliver anything. A channel that is configured but missing
+# its settings fails at the moment a hit arrives — which is the worst possible moment to find out,
+# so `cib doctor` and `cib watch test-alert` check it up front instead.
+_REQUIREMENTS: dict[str, tuple[str, ...]] = {
+    "stdout": (),
+    "file": (),
+    "webhook": ("CIB_NOTIFY_WEBHOOK_URL",),
+    "email": ("CIB_SMTP_HOST", "CIB_NOTIFY_EMAIL_FROM", "CIB_NOTIFY_EMAIL_TO"),
+}
+
+
+def configured_channels(channels: str | None = None) -> list[str]:
+    raw = channels or config.get("CIB_NOTIFY_CHANNELS", "stdout")
+    return [c.strip() for c in raw.split(",") if c.strip()]
+
+
+def describe_channels(channels: str | None = None) -> list[tuple[str, bool, str]]:
+    """(channel, usable, explanation) for each configured channel."""
+    out: list[tuple[str, bool, str]] = []
+    for name in configured_channels(channels):
+        if name not in CHANNELS:
+            out.append((name, False, f"unknown channel; expected one of {', '.join(CHANNELS)}"))
+            continue
+        missing = [key for key in _REQUIREMENTS[name] if not config.get(key).strip()]
+        if missing:
+            out.append((name, False, f"missing {', '.join(missing)}"))
+        elif name == "stdout":
+            out.append((name, True, "prints to the console — invisible in a scheduled run"))
+        else:
+            out.append((name, True, "ready"))
+    return out
+
 
 def send(alert: Alert, channels: str | None = None) -> dict[str, str]:
     """Deliver an alert to every configured channel. Returns per-channel outcome."""
