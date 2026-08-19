@@ -11,6 +11,7 @@ import {
 import { DataQualityBanner } from "@/components/DataQualityBanner";
 import { ErrorBanner, Loading } from "@/components/Loading";
 import { LineChart, seriesColor, type Line } from "@/components/LineChart";
+import { ExportLink } from "@/components/ExportLink";
 import { MetricCell } from "@/components/MetricCell";
 
 /**
@@ -277,26 +278,23 @@ function ComparisonBody({
 
           <h2>Export</h2>
           <div className="row">
-            <a
-              className="btn"
+            <ExportLink
               href={api.exportUrls.comparison(
                 columns.map((c) => c.campaign_slug),
                 comparison.at_day_index,
               )}
             >
               Comparison table (CSV)
-            </a>
-            <a
-              className="btn primary"
+            </ExportLink>
+            <ExportLink
+              primary
               href={api.exportUrls.briefing(
                 columns.map((c) => c.campaign_slug),
                 comparison.at_day_index,
               )}
-              target="_blank"
-              rel="noreferrer"
             >
               One-page briefing (HTML)
-            </a>
+            </ExportLink>
           </div>
         </>
       )}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { api, formatDate } from "@/lib/api";
+import { api, formatDate, IS_STATIC } from "@/lib/api";
 import { ErrorBanner, Loading } from "@/components/Loading";
 
 /**
@@ -136,9 +136,15 @@ export default function WatchlistPage() {
                     {r.last_error ?? ""}
                   </td>
                   <td>
-                    <button onClick={() => toggle(r.id, !r.enabled)}>
-                      {r.enabled ? "Disable" : "Enable"}
-                    </button>
+                    {IS_STATIC ? (
+                      <span className={`pill ${r.enabled ? "live" : "pre"}`}>
+                        {r.enabled ? "enabled" : "disabled"}
+                      </span>
+                    ) : (
+                      <button onClick={() => toggle(r.id, !r.enabled)}>
+                        {r.enabled ? "Disable" : "Enable"}
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}

@@ -6,19 +6,25 @@
  * is the only place that talks to it.
  */
 
+import { ApiError } from "./errors";
+
 export const API_BASE =
   process.env.NEXT_PUBLIC_API_BASE ?? "http://127.0.0.1:8000";
 
-export class ApiError extends Error {
-  constructor(
-    message: string,
-    readonly status: number,
-    readonly detail?: unknown,
-  ) {
-    super(message);
-    this.name = "ApiError";
-  }
-}
+/**
+ * "static" reads the snapshot committed at `src/lib/seed.json`, which is how the GitHub Pages
+ * build works — Pages serves files, not a Python process. Anything else talks to the live API.
+ *
+ * The distinction is deliberately visible in the UI rather than hidden: a snapshot is read-only
+ * and as old as its last refresh, and a reader who mistakes it for live data will quote a stale
+ * number.
+ */
+export const IS_STATIC = process.env.NEXT_PUBLIC_DATA_MODE === "static";
+
+/** Prefix for files under web/public, honouring the GitHub Pages basePath. */
+export const STATIC_ASSET_BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+export { ApiError } from "./errors";
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   let response: Response;
@@ -222,7 +228,7 @@ export interface Escalation {
 
 /* ---------------------------------------------------------------- calls */
 
-export const api = {
+const liveApi = {
   meta: () => request<Meta>("/api/meta"),
 
   campaigns: () => request<CampaignSummary[]>("/api/campaigns"),
@@ -305,15 +311,29 @@ export const api = {
     ),
 
   exportUrls: {
-    comparison: (refs: string[], atDay?: number | null) => {
+    /**
+     * Comparison exports depend on which campaigns are selected and at which cutoff, so they are
+     * generated on demand by the API. In static mode there is nothing to generate them, and this
+     * returns null so the UI can explain that rather than offer a link that fails.
+     */
+    comparison: (refs: string[], atDay?: number | null): string | null => {
+      if (IS_STATIC) return null;
       const params = new URLSearchParams();
       refs.forEach((r) => params.append("campaign", r));
       if (atDay != null) params.set("at_day", String(atDay));
       return `${API_BASE}/api/export/comparison.csv?${params}`;
     },
-    table: (ref: string, what: string) =>
-      `${API_BASE}/api/export/${ref}/${what}.csv`,
-    briefing: (refs: string[], atDay?: number | null, format = "html") => {
+    /** Per-campaign CSVs are baked as real files by `cib export snapshot` for the static build. */
+    table: (ref: string, what: string): string =>
+      IS_STATIC
+        ? `${STATIC_ASSET_BASE}/exports/${ref}-${what}.csv`
+        : `${API_BASE}/api/export/${ref}/${what}.csv`,
+    /** Single-campaign briefings are baked; a multi-campaign one needs the live tool. */
+    briefing: (refs: string[], atDay?: number | null, format = "html"): string | null => {
+      if (IS_STATIC) {
+        if (refs.length !== 1 || format !== "html") return null;
+        return `${STATIC_ASSET_BASE}/exports/${refs[0]}-briefing.html`;
+      }
       const params = new URLSearchParams();
       refs.forEach((r) => params.append("campaign", r));
       if (atDay != null) params.set("at_day", String(atDay));
@@ -322,6 +342,30 @@ export const api = {
     },
   },
 };
+
+/* ---------------------------------------------------------------- mode dispatch */
+
+/**
+ * The data layer the whole dashboard uses.
+ *
+ * In live mode every call reaches the Python API, which calls `cib.metrics`. In static mode every
+ * call reads the snapshot that `cib export snapshot` produced from those same functions. Either
+ * way no metric is computed in TypeScript.
+ */
+export const api: typeof liveApi = (() => {
+  if (!IS_STATIC) return liveApi;
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { staticApi } = require("./static-api") as typeof import("./static-api");
+  return { ...liveApi, ...staticApi, exportUrls: liveApi.exportUrls } as typeof liveApi;
+})();
+
+/** Snapshot metadata for the banner. Null in live mode. */
+export function snapshotInfo(): { generated_at: string; warnings: string[] } | null {
+  if (!IS_STATIC) return null;
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { seed } = require("./static-api") as typeof import("./static-api");
+  return { generated_at: seed.generated_at, warnings: seed.warnings };
+}
 
 /* ---------------------------------------------------------------- display helpers */
 

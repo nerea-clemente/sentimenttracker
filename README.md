@@ -402,6 +402,75 @@ output field by field.
 - `docs/METRICS.md` is generated. Edit `definitions.py` and run `make docs`; a test fails if the
   checked-in file is stale.
 
+## Publishing to GitHub Pages
+
+The dashboard normally talks to the Python API. GitHub Pages serves static files only, so there is
+no API to talk to — the same problem the media tracker solves, and solved the same way here:
+
+```
+cib export snapshot   →  web/src/lib/seed.json  →  next build (output: "export")  →  Pages
+```
+
+`cib export snapshot` writes every figure the dashboard needs into one JSON file, computed by
+`cib.metrics` — the same functions the CLI, the API and the tests call. The static frontend
+*selects* from what was baked; it still computes nothing. A test asserts that every baked value
+equals what `campaign_metrics()` returns for the same campaign and cutoff, and that every
+`row_ids` entry resolves in the baked evidence index, so the drill-down works offline too.
+
+What the static build can and cannot do:
+
+| | Live (`make api` + `make web`) | Static (Pages) |
+|---|---|---|
+| Comparison, detail, drill-down | yes | yes |
+| Day-index cutoffs | any | the baked ones: 7, 14, 30, 90, lifetime |
+| Campaigns per comparison | 2–4 | 2–4 (2–3 above 5 campaigns) |
+| Per-campaign CSV + briefing | yes | yes, pre-generated as files |
+| Comparison CSV / multi-campaign briefing | yes | no — depends on the reader's selection |
+| Logging escalations, toggling watch rules | yes | no, and the UI says so |
+
+Every page of a static build carries a banner with the snapshot's generation time, because a
+read-only build that looks live is how someone quotes a three-week-old number.
+
+### The workflow
+
+`.github/workflows/pages.yml` mirrors the media tracker's `refresh.yml`: on a schedule it polls the
+watch rules, rebuilds the daily snapshots, exports `seed.json`, commits the state database back to
+the branch, builds the site and deploys it. On a push it skips the pipeline and just rebuilds from
+the committed snapshot. Lint, the docs-sync check and the test suite run before anything deploys —
+a snapshot built from code that fails its own tests is not evidence.
+
+**Enable it once:** repository → Settings → Pages → *Source: GitHub Actions*. The site then lands at
+`https://<owner>.github.io/sentimenttracker/`. The base path is set by `DEPLOY_BASE_PATH` in the
+workflow; change it if you rename the repository.
+
+Build it locally exactly as CI does:
+
+```bash
+make snapshot      # rebuild seed.json from state/cib.sqlite3
+make site          # static export with the Pages base path
+make site-serve    # → http://127.0.0.1:4011/sentimenttracker/
+```
+
+### What is committed, and what must not be
+
+`state/cib.sqlite3` **is** committed — that is how scheduled runs persist state between them, and
+it is what the Pages build snapshots. It carries the seeded placeholder records and no imported
+coverage.
+
+Your working database lives in `data/` and is gitignored. **Keep it that way.** This repository is
+public, and real campaign names, escalation logs and logged internal signals are commercially
+sensitive. A test fails the build if the committed snapshot ever contains imported articles.
+
+To preview the dashboard with data in it, use the synthetic fixture:
+
+```bash
+make demo-snapshot   # builds data/demo.sqlite3 from the test fixture and snapshots it
+make snapshot        # restore the real one before committing
+```
+
+That snapshot labels itself `SYNTHETIC DEMO DATA` on every page. The articles in it are invented
+for the test suite — which is exactly why they may never be presented as measurement.
+
 ## Seed data
 
 `cib seed` creates three campaign records — two archived baselines and one pre-publication — plus

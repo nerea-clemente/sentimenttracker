@@ -605,6 +605,26 @@ def cmd_export(args) -> int:
     conn = _open(args)
     from .export import briefing, tables
 
+    if args.what != "snapshot" and not args.campaigns:
+        raise ValueError(f"`cib export {args.what}` needs at least one campaign.")
+
+    if args.what == "snapshot":
+        from .export import snapshot_json
+        out = Path(args.out or snapshot_json.DEFAULT_OUT)
+        if not out.is_absolute():
+            out = config.REPO_ROOT / out
+        assets = config.REPO_ROOT / snapshot_json.DEFAULT_ASSETS_DIR
+        payload = snapshot_json.write(conn, out, assets_dir=assets,
+                                      extra_warnings=args.warn)
+        stats = payload["stats"]
+        print(f"Wrote {out} ({out.stat().st_size / 1024:.1f} KB)")
+        print(f"  {len(payload.get('static_assets', []))} export file(s) -> {assets}")
+        print(f"  campaigns={stats['campaigns']} articles={stats['articles']} "
+              f"comparisons baked={stats['comparisons_baked']}")
+        for warning in payload["warnings"]:
+            print(f"  warning: {warning}")
+        return 0
+
     if args.what == "comparison":
         output = tables.comparison_csv(conn, args.campaigns, args.at_day)
     elif args.what == "articles":
@@ -888,12 +908,17 @@ def build_parser() -> argparse.ArgumentParser:
     # export
     p = sub.add_parser("export", help="CSV tables and the one-page briefing")
     p.add_argument("what", choices=["comparison", "articles", "escalations", "mentions",
-                                    "briefing"])
-    p.add_argument("campaigns", nargs="+")
+                                    "briefing", "snapshot"])
+    p.add_argument("campaigns", nargs="*",
+                   help="Campaign slugs or ids. Not used by `snapshot`, which covers all of them.")
     p.add_argument("--at-day", dest="at_day", type=int)
     p.add_argument("--format", default="markdown", choices=["markdown", "html"],
                    help="Briefing only")
-    p.add_argument("--out", help="Write to this path instead of stdout")
+    p.add_argument("--out", help="Write to this path instead of stdout "
+                                 "(snapshot: default web/src/lib/seed.json)")
+    p.add_argument("--warn", action="append",
+                   help="snapshot only: extra warning shown on every page of the static build. "
+                        "Use it to label a snapshot built from demo data.")
     p.set_defaults(func=cmd_export)
 
     p = sub.add_parser("serve", help="Run the HTTP API the dashboard talks to")

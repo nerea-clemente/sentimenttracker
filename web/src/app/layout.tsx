@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { SideNav } from "@/components/SideNav";
+import { SnapshotBanner } from "@/components/SnapshotBanner";
 
 export const metadata: Metadata = {
   title: "Campaign Impact Benchmarker",
@@ -18,7 +19,10 @@ export default function RootLayout({
       <body>
         <div className="shell">
           <SideNav />
-          <main>{children}</main>
+          <main>
+            <SnapshotBanner />
+            {children}
+          </main>
         </div>
       </body>
     </html>

@@ -6,11 +6,18 @@ __pycache__/
 .ruff_cache/
 *.egg-info/
 
-# Data — never commit the database or imported exports
-data/*.sqlite3
-data/*.sqlite3-*
-data/imports/*
+# Data — never commit your working database or imported exports. Real coverage, escalation logs
+# and logged internal signals are commercially sensitive, and this repository is public.
+data/
 !data/imports/.gitkeep
+
+# The CI-managed database IS committed, so scheduled runs persist state between them and the
+# Pages build has something to snapshot. Keep it to seeded, public-safe records only.
+*.sqlite3
+*.sqlite3-*
+*.db-wal
+*.db-shm
+!state/cib.sqlite3
 
 # Secrets
 .env

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { api, type CampaignSummary } from "@/lib/api";
 import { ErrorBanner, Loading } from "@/components/Loading";
+import { ExportLink } from "@/components/ExportLink";
 
 /**
  * Export.
@@ -82,47 +83,32 @@ export default function ExportPage() {
           selected campaign is the subject; any others become its comparison columns.
         </p>
         <div className="row">
-          <a
-            className="btn primary"
-            href={api.exportUrls.briefing(selected, atDay, "html")}
-            target="_blank"
-            rel="noreferrer"
-            aria-disabled={!primary}
-          >
+          <ExportLink primary href={api.exportUrls.briefing(selected, atDay, "html")}>
             Briefing (HTML, printable)
-          </a>
-          <a
-            className="btn"
-            href={api.exportUrls.briefing(selected, atDay, "markdown")}
-            target="_blank"
-            rel="noreferrer"
-          >
+          </ExportLink>
+          <ExportLink href={api.exportUrls.briefing(selected, atDay, "markdown")}>
             Briefing (Markdown)
-          </a>
+          </ExportLink>
         </div>
       </div>
 
       <h2>Tables</h2>
       <div className="card">
         <div className="row">
-          <a
-            className="btn"
-            href={api.exportUrls.comparison(selected, atDay)}
-            aria-disabled={selected.length < 2}
-          >
+          <ExportLink href={selected.length < 2 ? null : api.exportUrls.comparison(selected, atDay)}>
             Comparison table (CSV)
-          </a>
+          </ExportLink>
           {primary && (
             <>
-              <a className="btn" href={api.exportUrls.table(primary, "articles")}>
+              <ExportLink href={api.exportUrls.table(primary, "articles")}>
                 Articles (CSV)
-              </a>
-              <a className="btn" href={api.exportUrls.table(primary, "escalations")}>
+              </ExportLink>
+              <ExportLink href={api.exportUrls.table(primary, "escalations")}>
                 Escalations (CSV)
-              </a>
-              <a className="btn" href={api.exportUrls.table(primary, "mentions")}>
+              </ExportLink>
+              <ExportLink href={api.exportUrls.table(primary, "mentions")}>
                 Mentions (CSV)
-              </a>
+              </ExportLink>
             </>
           )}
         </div>

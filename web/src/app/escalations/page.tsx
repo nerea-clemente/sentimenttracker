@@ -9,6 +9,7 @@ import {
   type Meta,
 } from "@/lib/api";
 import { ErrorBanner, Loading } from "@/components/Loading";
+import { IS_STATIC } from "@/lib/api";
 
 /**
  * The escalation log.
@@ -109,6 +110,14 @@ export default function EscalationsPage() {
       </div>
 
       <h2>Log an escalation</h2>
+      {IS_STATIC ? (
+        <div className="empty-state">
+          <strong>Read-only snapshot.</strong>
+          Escalations are logged against the database, which this build does not carry. Log one
+          with <code className="inline">cib escalation add</code>, or run the dashboard locally
+          against the live API. The log below is as of the snapshot date.
+        </div>
+      ) : (
       <form className="card" onSubmit={submit}>
         {formError && <div className="banner danger">{formError}</div>}
         <div className="row">
@@ -172,6 +181,7 @@ export default function EscalationsPage() {
           {saving ? "Saving…" : "Log escalation"}
         </button>
       </form>
+      )}
 
       <h2>Logged events</h2>
       {escalations.length === 0 ? (
@@ -221,6 +231,8 @@ export default function EscalationsPage() {
                         <br />
                         {formatDate(e.verified_at)}
                       </span>
+                    ) : IS_STATIC ? (
+                      <span className="muted">unverified</span>
                     ) : (
                       <button onClick={() => verify(e.id)}>Verify</button>
                     )}
