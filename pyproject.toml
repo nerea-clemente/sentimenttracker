@@ -11,7 +11,10 @@ dependencies = []
 api = ["fastapi>=0.115", "uvicorn[standard]>=0.32"]
 ingest = ["openpyxl>=3.1", "requests>=2.31"]
 watch = ["apscheduler>=3.10", "requests>=2.31"]
-dev = ["pytest>=8.0", "ruff>=0.6"]
+# httpx2 backs fastapi.testclient. It is a real requirement for running the tests, not a
+# convenience: without it `from fastapi.testclient import TestClient` raises at import
+# time and aborts collection of the whole suite, not just the API tests.
+dev = ["pytest>=8.0", "ruff>=0.6", "httpx2>=0.1"]
 
 [project.scripts]
 cib = "cib.cli:main"

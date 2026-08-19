@@ -9,7 +9,19 @@ from __future__ import annotations
 import pytest
 
 fastapi = pytest.importorskip("fastapi")
-from fastapi.testclient import TestClient
+
+# starlette raises RuntimeError, not ImportError, when its HTTP client backend is missing, and
+# importorskip does not catch that — so an incomplete install aborted collection of the entire
+# suite rather than skipping this one module. httpx2 is declared in the dev extra; this is the
+# safety net that keeps the other 140 tests runnable if it is ever absent.
+try:
+    from fastapi.testclient import TestClient
+except RuntimeError as exc:  # pragma: no cover - depends on which extras are installed
+    pytest.skip(
+        f"fastapi.testclient is unusable ({exc}). Install the dev extra: "
+        "pip install -e '.[api,dev]'",
+        allow_module_level=True,
+    )
 
 from cib.api import main as api
 

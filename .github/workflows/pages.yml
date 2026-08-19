@@ -84,14 +84,16 @@ jobs:
 
       - name: Show database stats
         if: env.RUN_PIPELINE == 'true'
+        # Uses the project's own connection rather than the sqlite3 CLI, so the workflow depends
+        # on nothing the runner image happens to ship.
         run: |
           echo "::group::Database"
-          sqlite3 "$CIB_DB_PATH" 'SELECT
-              (SELECT COUNT(*) FROM campaigns)   AS campaigns,
-              (SELECT COUNT(*) FROM articles)    AS articles,
-              (SELECT COUNT(*) FROM outlets)     AS outlets,
-              (SELECT COUNT(*) FROM escalations) AS escalations,
-              (SELECT COUNT(*) FROM watch_hits)  AS watch_hits;'
+          python -c "
+          from cib.db import connect
+          conn = connect()
+          for table in ('campaigns','articles','outlets','escalations','mentions','watch_hits'):
+              print(f'{table:14}', conn.execute(f'SELECT COUNT(*) FROM {table}').fetchone()[0])
+          "
           echo "::endgroup::"
 
       - name: Export dashboard snapshot
@@ -131,7 +133,13 @@ jobs:
           NEXT_PUBLIC_DATA_MODE: static
           DEPLOY_BASE_PATH: /sentimenttracker
 
+      # enablement: true switches the repository's Pages source to GitHub Actions if it is still
+      # set to "Deploy from a branch". In branch mode GitHub runs its own Jekyll job over the repo
+      # root and publishes README.md as the homepage, which is not this dashboard.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: web/out
