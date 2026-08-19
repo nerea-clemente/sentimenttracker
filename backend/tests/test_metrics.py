@@ -156,3 +156,29 @@ def test_tier_mix_shares_sum_to_one(loaded, conn):
     mix = campaign_metrics(conn, loaded).get("tier_mix")
     assert sum(entry["articles"] for entry in mix.value.values()) == 12
     assert sum(entry["share"] for entry in mix.value.values()) == pytest.approx(1.0, abs=0.001)
+
+
+def test_days_to_90pct_says_which_denominator_it_used(loaded, conn):
+    """At a cutoff the denominator is the window, not the lifetime — a different number."""
+    lifetime = campaign_metrics(conn, loaded).get("days_to_90pct")
+    assert lifetime.basis["denominator"] == "lifetime"
+    assert lifetime.basis["total_articles"] == 12
+    assert lifetime.caveats == ()
+
+    windowed = campaign_metrics(conn, loaded, at_day_index=10).get("days_to_90pct")
+    assert windowed.basis["denominator"] == "window"
+    assert windowed.basis["total_articles"] == 10
+    assert any("not the campaign's lifetime total" in c for c in windowed.caveats)
+
+
+def test_half_life_refusal_names_the_real_obstacle(loaded, conn):
+    """A short window and an undecayed campaign are different problems and must read differently."""
+    windowed = campaign_metrics(conn, loaded, at_day_index=3).get("half_life_days")
+    assert windowed.available is False
+    assert "day 3 cutoff" in windowed.unavailable_reason
+    assert "widen the cutoff" in windowed.unavailable_reason
+
+    # The full window does decay, so this one resolves rather than refusing.
+    lifetime = campaign_metrics(conn, loaded).get("half_life_days")
+    assert lifetime.available is True
+    assert lifetime.value == 9

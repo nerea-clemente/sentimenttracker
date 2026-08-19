@@ -17,7 +17,7 @@ from ..db import query
 
 # Imported from the submodule, not the package: cib.metrics re-exports compare() as a
 # function, which shadows the module of the same name.
-from ..metrics.compare import METRIC_ORDER, compare
+from ..metrics.comparison import METRIC_ORDER, compare
 
 
 def _writer() -> tuple[io.StringIO, Any]:

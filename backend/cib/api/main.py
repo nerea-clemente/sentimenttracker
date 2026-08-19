@@ -21,7 +21,7 @@ from ..export import briefing as briefing_export
 from ..export import tables as table_export
 from ..metrics import definitions as metric_definitions
 from ..metrics import snapshot as snapshot_module
-from ..metrics.compare import (
+from ..metrics.comparison import (
     METRIC_ORDER,
     PrePublicationError,
     campaign_metrics,
@@ -52,11 +52,17 @@ app = FastAPI(
     ),
 )
 
+# This is a local-first tool: the dashboard runs on the same machine, on whichever port is free.
+# Any loopback origin is allowed by default rather than a hardcoded port, which would silently
+# break the dashboard the first time port 3000 was taken. Set CIB_CORS_ORIGINS to pin it down.
+_EXPLICIT_ORIGINS = [o.strip() for o in config.get("CIB_CORS_ORIGINS", "").split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[o.strip() for o in
-                   config.get("CIB_CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000")
-                   .split(",") if o.strip()],
+    allow_origins=_EXPLICIT_ORIGINS,
+    allow_origin_regex=(
+        None if _EXPLICIT_ORIGINS else r"^https?://(localhost|127\.0\.0\.1)(:\d+)?$"
+    ),
     allow_methods=["*"],
     allow_headers=["*"],
 )

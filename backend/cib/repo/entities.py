@@ -46,11 +46,22 @@ def list_all(conn: sqlite3.Connection, type: str | None = None) -> list[Entity]:
     return [Entity.from_row(r) for r in rows]
 
 
+def own_company_candidates(conn: sqlite3.Connection) -> list[Entity]:
+    """Every entity typed own_company. There should be exactly one."""
+    return [Entity.from_row(r) for r in
+            query(conn, "SELECT * FROM entities WHERE type = 'own_company' ORDER BY id")]
+
+
 def own_company(conn: sqlite3.Connection) -> Entity | None:
-    """The entity this tool measures exposure for. There should be exactly one."""
-    return Entity.from_row(
-        query_one(conn, "SELECT * FROM entities WHERE type = 'own_company' ORDER BY id LIMIT 1")
-    )
+    """The single entity this tool measures exposure for, or None if that is not well defined.
+
+    Returns None both when no own_company entity exists and when more than one does. Picking the
+    lowest id when there are several would silently measure exposure for the wrong company and
+    report it as a confident number — which is the exact failure this tool exists to prevent.
+    Multiple legal or trading names belong on one entity as aliases, not as separate entities.
+    """
+    candidates = own_company_candidates(conn)
+    return candidates[0] if len(candidates) == 1 else None
 
 
 def add_alias(conn: sqlite3.Connection, entity_id: int, alias: str) -> None:

@@ -30,7 +30,7 @@ cib = ["migrations/*.sql"]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
-src = ["backend"]
+src = ["backend", "scripts"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "UP", "B", "SIM", "C4", "RUF"]
@@ -40,6 +40,8 @@ ignore = ["E501"]
 "backend/tests/*" = ["B011", "E402"]
 # Depends()/Query() in argument defaults is FastAPI's documented idiom, not a mistake.
 "backend/cib/api/*" = ["B008"]
+# This script writes prose for humans; × and — are intended, not typos for x and -.
+"scripts/render_metrics_doc.py" = ["RUF001"]
 
 [tool.pytest.ini_options]
 testpaths = ["backend/tests"]

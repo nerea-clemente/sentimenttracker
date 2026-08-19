@@ -177,3 +177,33 @@ def test_promoting_a_campaign_reindexes_its_day_axis(prepub_campaign, conn, samp
     assert result.value("total_articles") == 12
     # Published two days after the fixture's first coverage, so day 0 coverage becomes day -2.
     assert result.value("peak_day") == -2
+
+
+def test_an_unmeasured_precedent_is_flagged_not_shown_as_zeros(conn):
+    """A precedent with nothing imported must not read as "that investigation went nowhere"."""
+    empty = campaign_repo.create(
+        conn, name="Past investigation, not yet imported", publisher_org="Test Publisher",
+        campaign_type="ngo_report", status="archived", published_at="2019-03-04T00:00:00",
+    )
+    forthcoming = campaign_repo.create(
+        conn, name="Forthcoming", publisher_org="Test Publisher", campaign_type="journalism",
+        status="pre_publication", published_at=None,
+    )
+    campaign_repo.add_precedent(conn, forthcoming, empty, rationale="Same publisher.")
+
+    precedent = prepublication_view(conn, forthcoming)["publisher_precedent"][0]
+    assert precedent["has_measured_footprint"] is False
+    assert any("empty dataset, not a measurement of low coverage" in c
+               for c in precedent["caveats"])
+
+
+def test_a_measured_precedent_reports_its_footprint(conn, loaded):
+    forthcoming = campaign_repo.create(
+        conn, name="Forthcoming", publisher_org="Test Publisher", campaign_type="journalism",
+        status="pre_publication", published_at=None,
+    )
+    campaign_repo.add_precedent(conn, forthcoming, loaded, rationale="Same publisher.")
+
+    precedent = prepublication_view(conn, forthcoming)["publisher_precedent"][0]
+    assert precedent["has_measured_footprint"] is True
+    assert precedent["footprint"]["unique_stories"]["value"] == 8

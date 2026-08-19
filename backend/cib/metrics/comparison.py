@@ -145,6 +145,11 @@ def prepublication_view(conn: sqlite3.Connection, campaign_ref: str | int) -> di
                 if k in ms.metrics
             }
             entry["data_quality"] = ms.data_quality
+            # Carried through deliberately: a precedent with nothing imported shows zeros, and
+            # a zero here would read as "that investigation went nowhere" rather than "we have
+            # not measured it yet".
+            entry["caveats"] = ms.caveats
+            entry["has_measured_footprint"] = ms.data_quality["articles_total_imported"] > 0
         precedents.append(entry)
 
     signals = [dict(r) for r in query(conn, """

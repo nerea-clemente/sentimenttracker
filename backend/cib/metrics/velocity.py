@@ -78,13 +78,22 @@ def compute(conn: sqlite3.Connection, campaign_id: int, campaign_status: str,
             half_life = day - peak_day
             break
     if half_life is None:
+        reason = (
+            f"Daily volume has not fallen below 10% of peak ({threshold:.1f} articles/day) "
+            f"anywhere up to day {series[-1][0]}"
+        )
+        reason += (
+            f", the day {at_day_index} cutoff. The campaign may well have decayed after it; "
+            "widen the cutoff to find out."
+            if at_day_index is not None
+            else ", the last day with imported coverage. This is an undecayed campaign, not a zero."
+        )
         out.append(unavailable(
-            "half_life_days",
-            "Daily volume has not yet fallen below 10% of peak within the imported window. "
-            "This is an open campaign, not a zero.",
+            "half_life_days", reason,
             basis={"peak_day": peak_day, "peak_volume": peak_volume,
                    "threshold": round(threshold, 2),
-                   "last_day_observed": series[-1][0]},
+                   "last_day_observed": series[-1][0],
+                   "at_day_index": at_day_index},
         ))
     else:
         # The evidence for a half-life is the decay itself: the peak day's articles and everything
@@ -121,10 +130,21 @@ def compute(conn: sqlite3.Connection, campaign_id: int, campaign_status: str,
             if running >= target:
                 day_at_90 = day
                 break
+        # With a cutoff applied, the denominator is the coverage inside the window, not the
+        # campaign's lifetime total. That still compares fairly between campaigns truncated the
+        # same way, but it is a different number from the lifetime figure and must say so.
+        window_caveats = [] if at_day_index is None else [
+            f"Measured against the {total} articles inside the day {at_day_index} window, not "
+            "the campaign's lifetime total. Comparable between campaigns truncated at the same "
+            "day; not comparable with an untruncated figure."
+        ]
         out.append(metric(
             "days_to_90pct", day_at_90, row_table="articles", row_ids=contributing,
             basis={"total_articles": total, "target_articles": round(target, 1),
-                   "articles_by_that_day": running},
+                   "articles_by_that_day": running,
+                   "denominator": ("window" if at_day_index is not None else "lifetime"),
+                   "at_day_index": at_day_index},
+            caveats=window_caveats,
         ))
 
     tail_ids = [aid for day, ids in per_day.items() if day > LONG_TAIL_DAY for aid in ids]

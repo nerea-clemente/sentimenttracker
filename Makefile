@@ -1,4 +1,4 @@
-.PHONY: setup test lint fix seed api web dev clean
+.PHONY: setup test lint fix seed api web dev docs docs-check clean
 
 VENV := .venv
 PY   := $(VENV)/bin/python
@@ -32,3 +32,9 @@ web:                         ## Run the dashboard on :3000
 
 clean:
 	rm -rf .pytest_cache .ruff_cache **/__pycache__
+
+docs:                        ## Regenerate docs/METRICS.md from the metric definitions
+	$(PY) scripts/render_metrics_doc.py
+
+docs-check:                  ## Fail if docs/METRICS.md is stale
+	$(PY) scripts/render_metrics_doc.py --check

@@ -7,7 +7,7 @@ No metric logic lives anywhere else. The HTTP layer and the frontend consume thi
 not reimplement any part of it.
 """
 
-from .compare import (
+from .comparison import (
     METRIC_ORDER,
     PrePublicationError,
     campaign_metrics,

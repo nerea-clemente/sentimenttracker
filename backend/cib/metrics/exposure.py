@@ -17,10 +17,20 @@ def compute(conn: sqlite3.Connection, campaign_id: int,
     out: list[MetricValue] = []
 
     if own is None:
-        reason = (
-            "No entity of type 'own_company' is configured, so there is nothing to measure "
-            "exposure for. Create one with `cib entity add --type own_company`."
-        )
+        candidates = entity_repo.own_company_candidates(conn)
+        if not candidates:
+            reason = (
+                "No entity of type 'own_company' is configured, so there is nothing to measure "
+                "exposure for. Create one with `cib entity add --type own_company`."
+            )
+        else:
+            names = ", ".join(f"#{c.id} {c.name}" for c in candidates)
+            reason = (
+                f"{len(candidates)} entities are typed 'own_company' ({names}), so it is "
+                "ambiguous which one exposure should be measured for. Exactly one is required; "
+                "put additional legal or trading names on it as aliases with "
+                "`cib entity add --alias`, and delete or retype the others."
+            )
         return [
             unavailable("own_company_mentions", reason),
             unavailable("depth_score", reason),

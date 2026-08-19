@@ -56,7 +56,12 @@ class ImportReport:
             f"{self.rejected} rejected",
         ]
         if self.already_imported_as is not None:
-            parts.append(f"identical file previously imported as #{self.already_imported_as}")
+            note = f"identical file previously imported as #{self.already_imported_as}"
+            if self.inserted:
+                # Same file, different campaign: not a re-import, so say so rather than letting
+                # the notice read as "nothing happened".
+                note += " (into a different campaign — these rows are new here)"
+            parts.append(note)
         return " | ".join(parts)
 
 

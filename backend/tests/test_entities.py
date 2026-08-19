@@ -147,3 +147,34 @@ def test_no_metric_reads_the_tone_table(conn, loaded):
             f"{path.name} references article_tone; tone is a secondary label and must not feed "
             "a metric"
         )
+
+
+def test_two_own_company_entities_refuse_rather_than_guess(conn, loaded):
+    """Silently measuring exposure for the wrong company is the worst failure available here.
+
+    `cib seed` creates a placeholder own_company entity. Adding a real one used to leave two, and
+    the metrics picked the lower id — reporting a confident zero for a company nobody asked about.
+    """
+    entity_repo.create(conn, name="Placeholder Co", type="own_company")
+    entity_repo.create(conn, name="Real Co", type="own_company", aliases=["European aquaculture feed"])
+    matcher.match_campaign(conn, loaded)
+
+    result = campaign_metrics(conn, loaded)
+    for key in ("own_company_mentions", "depth_score", "first_mention_day"):
+        metric = result.get(key)
+        assert metric.available is False
+        assert "2 entities are typed 'own_company'" in metric.unavailable_reason
+        assert "Placeholder Co" in metric.unavailable_reason
+        assert "Real Co" in metric.unavailable_reason
+        assert "aliases" in metric.unavailable_reason
+
+
+def test_one_own_company_entity_measures_normally(conn, loaded):
+    entity_repo.create(conn, name="Real Co", type="own_company",
+                       aliases=["European aquaculture feed"])
+    matcher.match_campaign(conn, loaded)
+
+    metric = campaign_metrics(conn, loaded).get("own_company_mentions")
+    assert metric.available is True
+    assert metric.value > 0
+    assert metric.basis["entity"] == "Real Co"

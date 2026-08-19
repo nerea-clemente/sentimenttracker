@@ -18,9 +18,9 @@ from . import seed as seed_module
 from .actor import set_actor
 from .db import connect, query, transaction
 from .metrics import METRIC_ORDER, PrePublicationError
-from .metrics import compare as compare_module
 from .metrics import definitions as metric_definitions
 from .metrics import snapshot as snapshot_module
+from .metrics.comparison import campaign_metrics, compare, prepublication_view
 from .migrations.runner import migrate
 from .models import SEVERITY_ANCHORS
 from .repo import campaigns as campaign_repo
@@ -406,10 +406,10 @@ def cmd_outlet_list(args) -> int:
 def cmd_metrics(args) -> int:
     conn = _open(args)
     try:
-        result = compare_module.campaign_metrics(conn, args.campaign, args.at_day)
+        result = campaign_metrics(conn, args.campaign, args.at_day)
     except PrePublicationError as exc:
         print(f"{exc}\n")
-        _print_json(compare_module.prepublication_view(conn, args.campaign))
+        _print_json(prepublication_view(conn, args.campaign))
         return 0
     if args.json:
         _print_json(result.to_dict())
@@ -440,7 +440,7 @@ def cmd_metrics(args) -> int:
 
 def cmd_compare(args) -> int:
     conn = _open(args)
-    result = compare_module.compare(conn, args.campaigns, args.at_day)
+    result = compare(conn, args.campaigns, args.at_day)
     if args.json:
         _print_json(result)
         return 0
@@ -468,7 +468,9 @@ def cmd_compare(args) -> int:
                 else:
                     cells.append(str(metric["value"]))
             if label:
-                print(f"  {label:<32}" + "".join(f"{c[:21]:>22}" for c in cells))
+                # Truncate rather than let a long label push the value columns out of alignment.
+                shown = label if len(label) <= 32 else f"{label[:31]}…"
+                print(f"  {shown:<32}" + "".join(f"{c[:21]:>22}" for c in cells))
 
     for view in result["pre_publication"]:
         print(f"\n{view['campaign']['slug']}: {view['footprint_refusal']}")
