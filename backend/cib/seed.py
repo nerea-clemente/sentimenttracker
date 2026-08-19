@@ -26,6 +26,8 @@ SOURCES = {
     "danwatch_series": "https://danwatch.dk/serie/de-fisk-du-ikke-ved-du-spiser/",
     "danwatch_companies": "https://danwatch.dk/det-siger-virksomhederne-om-import-af-fisk-fra-vestafrika/",
     "danwatch_escalation": "https://danwatch.dk/fiskemels-afsloeringer-tages-op-i-eu-og-folketinget/",
+    "danwatch_transparency": "https://danwatch.dk/eksperter-kraever-stoerre-gennemsigtighed-med-import-af-fiskemel-og-olie-fra-vestafrika/",
+    "danwatch_companies_en": "https://danwatch.dk/en/they-buy-fish-meal-and-fish-oil-from-west-africa/",
     "danwatch_forbandet": "https://danwatch.dk/forbandet-fiskemel/",
     "amnesty_prize": "https://amnesty.dk/amnestys-mediepris-2025-tildeles-artikelserier-om-skaemmende-forhold-paa-bosteder-og-fiskemels-betydning-for-migrationen-til-europa/",
     "changing_markets": "https://changingmarkets.org/report/fishing-for-catastrophe/",
@@ -60,7 +62,18 @@ CAMPAIGNS = [
             "established. published_at is set to the 1st with precision='month', so every "
             "day-aligned figure carries that error bar. Pin it with `cib campaign set-published` "
             "once confirmed against the source.\n\n"
-            f"Sources: {SOURCES['danwatch_series']} · {SOURCES['danwatch_companies']}\n\n"
+            f"Sources: {SOURCES['danwatch_series']} · {SOURCES['danwatch_companies']} · "
+            f"English version: {SOURCES['danwatch_companies_en']}\n\n"
+            "KNOWN ESCALATION, NOT YET LOGGED: Danwatch reported that the fishmeal revelations "
+            "were taken up in the EU and in the Folketing. On the severity anchors that is a 2 "
+            "(formal query or parliamentary question), and it is the first link in this "
+            "campaign's escalation chain. It is not logged because the date could not be "
+            "confirmed and an escalation with a guessed date is not evidence. Log it once dated:\n"
+            "  cib escalation add --campaign danwatch-2019-west-african-fishmeal \\\n"
+            "    --type parliamentary_question --actor 'Folketinget' --severity 2 \\\n"
+            f"    --occurred-at <date> --source-url {SOURCES['danwatch_escalation']} \\\n"
+            "    --description 'Fishmeal revelations raised in the EU and the Danish parliament'\n"
+            f"A related follow-up on transparency demands: {SOURCES['danwatch_transparency']}\n\n"
             "No article data seeded — import the Infomedia export:\n"
             "  cib import infomedia --campaign danwatch-2019-west-african-fishmeal --file <export>"
         ),

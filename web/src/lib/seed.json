@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-08-19T13:52:33Z",
+ "generated_at": "2026-08-19T14:06:40Z",
  "generated_by": "user:root",
  "mode": "snapshot",
  "warnings": [
@@ -371,8 +371,8 @@
     "first_signal_at": null,
     "timezone": "Europe/Copenhagen",
     "themes": "[\"fishmeal\", \"west_africa\", \"food_security\", \"supply_chain\"]",
-    "notes": "Danish investigative outlet Danwatch's series on fishmeal and fish oil imported from West Africa. In October 2019 Danwatch put questions to six Danish companies buying fishmeal and fish oil from the region about how they avoid affecting West African food security. BioMar was among the companies named, alongside Pelagia, Triple Nine Group, FF Skagen, Aller Aqua and ED&F Man.\n\nDATE PRECISION: confirmed as October 2019; the exact publication day was not established. published_at is set to the 1st with precision='month', so every day-aligned figure carries that error bar. Pin it with `cib campaign set-published` once confirmed against the source.\n\nSources: https://danwatch.dk/serie/de-fisk-du-ikke-ved-du-spiser/ · https://danwatch.dk/det-siger-virksomhederne-om-import-af-fisk-fra-vestafrika/\n\nNo article data seeded — import the Infomedia export:\n  cib import infomedia --campaign danwatch-2019-west-african-fishmeal --file <export>",
-    "created_at": "2026-08-19T13:49:33Z",
+    "notes": "Danish investigative outlet Danwatch's series on fishmeal and fish oil imported from West Africa. In October 2019 Danwatch put questions to six Danish companies buying fishmeal and fish oil from the region about how they avoid affecting West African food security. BioMar was among the companies named, alongside Pelagia, Triple Nine Group, FF Skagen, Aller Aqua and ED&F Man.\n\nDATE PRECISION: confirmed as October 2019; the exact publication day was not established. published_at is set to the 1st with precision='month', so every day-aligned figure carries that error bar. Pin it with `cib campaign set-published` once confirmed against the source.\n\nSources: https://danwatch.dk/serie/de-fisk-du-ikke-ved-du-spiser/ · https://danwatch.dk/det-siger-virksomhederne-om-import-af-fisk-fra-vestafrika/ · English version: https://danwatch.dk/en/they-buy-fish-meal-and-fish-oil-from-west-africa/\n\nKNOWN ESCALATION, NOT YET LOGGED: Danwatch reported that the fishmeal revelations were taken up in the EU and in the Folketing. On the severity anchors that is a 2 (formal query or parliamentary question), and it is the first link in this campaign's escalation chain. It is not logged because the date could not be confirmed and an escalation with a guessed date is not evidence. Log it once dated:\n  cib escalation add --campaign danwatch-2019-west-african-fishmeal \\\n    --type parliamentary_question --actor 'Folketinget' --severity 2 \\\n    --occurred-at <date> --source-url https://danwatch.dk/fiskemels-afsloeringer-tages-op-i-eu-og-folketinget/ \\\n    --description 'Fishmeal revelations raised in the EU and the Danish parliament'\nA related follow-up on transparency demands: https://danwatch.dk/eksperter-kraever-stoerre-gennemsigtighed-med-import-af-fiskemel-og-olie-fra-vestafrika/\n\nNo article data seeded — import the Infomedia export:\n  cib import infomedia --campaign danwatch-2019-west-african-fishmeal --file <export>",
+    "created_at": "2026-08-19T14:06:40Z",
     "created_by": "user:root",
     "published_at_precision": "month"
    },
@@ -388,7 +388,7 @@
     "timezone": "Europe/London",
     "themes": "[\"fishmeal\", \"fish_oil\", \"aquaculture\", \"sourcing\", \"certification\"]",
     "notes": "NGO report mapping fishmeal and fish oil (FMFO) supply chains from fishery to fork, based on field investigations in India, Vietnam and The Gambia in mid-2019. It links unsustainable and in places illegal FMFO sourcing to major European aquafeed companies and retailers. BioMar is named as a buyer of marine ingredients from West Africa and publicly responded, saying the authors misconstrued certain data. Skretting also responded. Trade press covered the reaction on 21 October 2019.\n\nSources: https://changingmarkets.org/report/fishing-for-catastrophe/ · https://changingmarkets.org/wp-content/uploads/2023/10/CM-WEB-FINAL-FISHING-FOR-CATASTROPHE-2019.pdf · https://www.agtechnavigator.com/Article/2019/10/21/feed-makers-retailers-react-to-claims-in-fishmeal-report/\n\nNo article data seeded — import the Factiva or Nexis export:\n  cib import factiva --campaign changing-markets-2019-fishing-for-catastrophe --file <export>",
-    "created_at": "2026-08-19T13:49:33Z",
+    "created_at": "2026-08-19T14:06:40Z",
     "created_by": "user:root",
     "published_at_precision": "day"
    },
@@ -404,7 +404,7 @@
     "timezone": "America/New_York",
     "themes": "[\"fishmeal\", \"aquaculture\", \"supply_chain\", \"forced_labour\", \"west_africa\", \"china\", \"investigation\"]",
     "notes": "A cross-border investigation into the global fishmeal and aquaculture industries by The Outlaw Ocean Project, reported by more than two dozen journalists across as many countries, covering roughly 1,400 fishmeal plants, the vessels supplying them and where the resulting seafood ends up. Reported findings include fish farms in Xinjiang and Tibet, forced labour in Russia's Far East, the industry's role in Western Sahara, and fish diverted from local consumption into fishmeal plants in The Gambia and Mauritania.\n\nSTATUS: recorded as pre_publication. Preliminary findings were presented to a US congressional hearing in October 2023 and picked up by the trade press, but full publication could not be confirmed. VERIFY THIS before relying on it: if the investigation has published, set the date with\n  cib campaign set-published outlaw-ocean-food-for-feed <date> --status live\nwhich also recomputes day_index across any coverage already imported.\n\nSources: https://theoutlawocean.substack.com/p/the-outlaw-ocean-testifies-before · https://www.seafoodsource.com/news/aquaculture/outlaw-ocean-project-teases-new-aquaculture-investigation-during-congressional-hearing",
-    "created_at": "2026-08-19T13:49:33Z",
+    "created_at": "2026-08-19T14:06:40Z",
     "created_by": "user:root",
     "published_at_precision": "day"
    },
@@ -420,7 +420,7 @@
     "timezone": "Europe/Copenhagen",
     "themes": "[\"fishmeal\", \"west_africa\", \"migration\", \"food_security\"]",
     "notes": "Danwatch's later fishmeal series, reported by Oscar Rothstein from Senegal and Mauritania, on how fishmeal and fish oil production bought in quantity by Danish companies contributes to migration towards the Canary Islands. Reporting was carried out in autumn 2024. The series won Amnesty International Denmark's Media Prize 2025.\n\nDATE PRECISION: only the year could be confirmed, so published_at is 1 January with precision='year' and every day-aligned figure carries that error bar. This campaign is the strongest available precedent for a Danwatch investigation, so pinning its real date is worth doing early.\n\nSources: https://danwatch.dk/forbandet-fiskemel/ · https://amnesty.dk/amnestys-mediepris-2025-tildeles-artikelserier-om-skaemmende-forhold-paa-bosteder-og-fiskemels-betydning-for-migrationen-til-europa/",
-    "created_at": "2026-08-19T13:49:33Z",
+    "created_at": "2026-08-19T14:06:40Z",
     "created_by": "user:root",
     "published_at_precision": "year"
    }
@@ -477,7 +477,7 @@
    "first_signal_at": null,
    "timezone": "Europe/Copenhagen",
    "themes": "[\"fishmeal\", \"west_africa\", \"food_security\", \"supply_chain\"]",
-   "notes": "Danish investigative outlet Danwatch's series on fishmeal and fish oil imported from West Africa. In October 2019 Danwatch put questions to six Danish companies buying fishmeal and fish oil from the region about how they avoid affecting West African food security. BioMar was among the companies named, alongside Pelagia, Triple Nine Group, FF Skagen, Aller Aqua and ED&F Man.\n\nDATE PRECISION: confirmed as October 2019; the exact publication day was not established. published_at is set to the 1st with precision='month', so every day-aligned figure carries that error bar. Pin it with `cib campaign set-published` once confirmed against the source.\n\nSources: https://danwatch.dk/serie/de-fisk-du-ikke-ved-du-spiser/ · https://danwatch.dk/det-siger-virksomhederne-om-import-af-fisk-fra-vestafrika/\n\nNo article data seeded — import the Infomedia export:\n  cib import infomedia --campaign danwatch-2019-west-african-fishmeal --file <export>",
+   "notes": "Danish investigative outlet Danwatch's series on fishmeal and fish oil imported from West Africa. In October 2019 Danwatch put questions to six Danish companies buying fishmeal and fish oil from the region about how they avoid affecting West African food security. BioMar was among the companies named, alongside Pelagia, Triple Nine Group, FF Skagen, Aller Aqua and ED&F Man.\n\nDATE PRECISION: confirmed as October 2019; the exact publication day was not established. published_at is set to the 1st with precision='month', so every day-aligned figure carries that error bar. Pin it with `cib campaign set-published` once confirmed against the source.\n\nSources: https://danwatch.dk/serie/de-fisk-du-ikke-ved-du-spiser/ · https://danwatch.dk/det-siger-virksomhederne-om-import-af-fisk-fra-vestafrika/ · English version: https://danwatch.dk/en/they-buy-fish-meal-and-fish-oil-from-west-africa/\n\nKNOWN ESCALATION, NOT YET LOGGED: Danwatch reported that the fishmeal revelations were taken up in the EU and in the Folketing. On the severity anchors that is a 2 (formal query or parliamentary question), and it is the first link in this campaign's escalation chain. It is not logged because the date could not be confirmed and an escalation with a guessed date is not evidence. Log it once dated:\n  cib escalation add --campaign danwatch-2019-west-african-fishmeal \\\n    --type parliamentary_question --actor 'Folketinget' --severity 2 \\\n    --occurred-at <date> --source-url https://danwatch.dk/fiskemels-afsloeringer-tages-op-i-eu-og-folketinget/ \\\n    --description 'Fishmeal revelations raised in the EU and the Danish parliament'\nA related follow-up on transparency demands: https://danwatch.dk/eksperter-kraever-stoerre-gennemsigtighed-med-import-af-fiskemel-og-olie-fra-vestafrika/\n\nNo article data seeded — import the Infomedia export:\n  cib import infomedia --campaign danwatch-2019-west-african-fishmeal --file <export>",
    "article_count": 0,
    "outlet_count": 0,
    "escalation_count": 0,
@@ -523,8 +523,8 @@
      "food_security",
      "supply_chain"
     ],
-    "notes": "Danish investigative outlet Danwatch's series on fishmeal and fish oil imported from West Africa. In October 2019 Danwatch put questions to six Danish companies buying fishmeal and fish oil from the region about how they avoid affecting West African food security. BioMar was among the companies named, alongside Pelagia, Triple Nine Group, FF Skagen, Aller Aqua and ED&F Man.\n\nDATE PRECISION: confirmed as October 2019; the exact publication day was not established. published_at is set to the 1st with precision='month', so every day-aligned figure carries that error bar. Pin it with `cib campaign set-published` once confirmed against the source.\n\nSources: https://danwatch.dk/serie/de-fisk-du-ikke-ved-du-spiser/ · https://danwatch.dk/det-siger-virksomhederne-om-import-af-fisk-fra-vestafrika/\n\nNo article data seeded — import the Infomedia export:\n  cib import infomedia --campaign danwatch-2019-west-african-fishmeal --file <export>",
-    "created_at": "2026-08-19T13:49:33Z",
+    "notes": "Danish investigative outlet Danwatch's series on fishmeal and fish oil imported from West Africa. In October 2019 Danwatch put questions to six Danish companies buying fishmeal and fish oil from the region about how they avoid affecting West African food security. BioMar was among the companies named, alongside Pelagia, Triple Nine Group, FF Skagen, Aller Aqua and ED&F Man.\n\nDATE PRECISION: confirmed as October 2019; the exact publication day was not established. published_at is set to the 1st with precision='month', so every day-aligned figure carries that error bar. Pin it with `cib campaign set-published` once confirmed against the source.\n\nSources: https://danwatch.dk/serie/de-fisk-du-ikke-ved-du-spiser/ · https://danwatch.dk/det-siger-virksomhederne-om-import-af-fisk-fra-vestafrika/ · English version: https://danwatch.dk/en/they-buy-fish-meal-and-fish-oil-from-west-africa/\n\nKNOWN ESCALATION, NOT YET LOGGED: Danwatch reported that the fishmeal revelations were taken up in the EU and in the Folketing. On the severity anchors that is a 2 (formal query or parliamentary question), and it is the first link in this campaign's escalation chain. It is not logged because the date could not be confirmed and an escalation with a guessed date is not evidence. Log it once dated:\n  cib escalation add --campaign danwatch-2019-west-african-fishmeal \\\n    --type parliamentary_question --actor 'Folketinget' --severity 2 \\\n    --occurred-at <date> --source-url https://danwatch.dk/fiskemels-afsloeringer-tages-op-i-eu-og-folketinget/ \\\n    --description 'Fishmeal revelations raised in the EU and the Danish parliament'\nA related follow-up on transparency demands: https://danwatch.dk/eksperter-kraever-stoerre-gennemsigtighed-med-import-af-fiskemel-og-olie-fra-vestafrika/\n\nNo article data seeded — import the Infomedia export:\n  cib import infomedia --campaign danwatch-2019-west-african-fishmeal --file <export>",
+    "created_at": "2026-08-19T14:06:40Z",
     "created_by": "user:root",
     "is_pre_publication": false
    },
@@ -556,7 +556,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "unique_stories": {
        "key": "unique_stories",
@@ -572,7 +572,7 @@
         "story_members": {}
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "unique_outlets": {
        "key": "unique_outlets",
@@ -586,7 +586,7 @@
         "total_articles": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "syndication_ratio": {
        "key": "syndication_ratio",
@@ -603,7 +603,7 @@
        "caveats": [
         "No stories imported, so the ratio is undefined rather than zero."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "tier_mix": {
        "key": "tier_mix",
@@ -618,7 +618,7 @@
         "total_articles": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "country_count": {
        "key": "country_count",
@@ -634,7 +634,7 @@
         "articles_total": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "language_count": {
        "key": "language_count",
@@ -650,7 +650,7 @@
         "articles_total": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "total_reach": {
        "key": "total_reach",
@@ -667,7 +667,7 @@
         "estimated_outlet_ids": []
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "reach_coverage": {
        "key": "reach_coverage",
@@ -682,7 +682,7 @@
         "outlets_total": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "peak_day": {
        "key": "peak_day",
@@ -694,7 +694,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "peak_volume": {
        "key": "peak_volume",
@@ -706,7 +706,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "days_to_peak": {
        "key": "days_to_peak",
@@ -718,7 +718,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "half_life_days": {
        "key": "half_life_days",
@@ -730,7 +730,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "days_to_90pct": {
        "key": "days_to_90pct",
@@ -742,7 +742,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "long_tail": {
        "key": "long_tail",
@@ -756,7 +756,7 @@
         "articles_after_day_30": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "own_company_mentions": {
        "key": "own_company_mentions",
@@ -777,7 +777,7 @@
        "caveats": [
         "No articles imported for this campaign."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "depth_score": {
        "key": "depth_score",
@@ -828,7 +828,7 @@
         "No articles imported for this campaign.",
         "The weighted total is only meaningful alongside its components; both are returned together and the API has no endpoint that returns the total alone."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "first_mention_day": {
        "key": "first_mention_day",
@@ -842,7 +842,7 @@
         "note": "No articles imported for this campaign."
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "competitor_comparison": {
        "key": "competitor_comparison",
@@ -868,7 +868,7 @@
         "No articles imported for this campaign.",
         "No competitor entities are configured, so this comparison has nothing to compare against."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "escalation_count": {
        "key": "escalation_count",
@@ -888,7 +888,7 @@
        "caveats": [
         "Nothing has ever been logged to this campaign's escalation log, so a count of zero means 'not recorded', not 'nothing happened'."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "days_to_first_escalation": {
        "key": "days_to_first_escalation",
@@ -902,7 +902,7 @@
         "log_last_updated": null
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "severity_weighted_total": {
        "key": "severity_weighted_total",
@@ -926,7 +926,7 @@
        "caveats": [
         "Nothing has ever been logged to this campaign's escalation log, so a count of zero means 'not recorded', not 'nothing happened'."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "escalation_chain": {
        "key": "escalation_chain",
@@ -997,7 +997,7 @@
        "caveats": [
         "Nothing has ever been logged to this campaign's escalation log, so a count of zero means 'not recorded', not 'nothing happened'."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       }
      },
      "caveats": [
@@ -1043,7 +1043,7 @@
      "certification"
     ],
     "notes": "NGO report mapping fishmeal and fish oil (FMFO) supply chains from fishery to fork, based on field investigations in India, Vietnam and The Gambia in mid-2019. It links unsustainable and in places illegal FMFO sourcing to major European aquafeed companies and retailers. BioMar is named as a buyer of marine ingredients from West Africa and publicly responded, saying the authors misconstrued certain data. Skretting also responded. Trade press covered the reaction on 21 October 2019.\n\nSources: https://changingmarkets.org/report/fishing-for-catastrophe/ · https://changingmarkets.org/wp-content/uploads/2023/10/CM-WEB-FINAL-FISHING-FOR-CATASTROPHE-2019.pdf · https://www.agtechnavigator.com/Article/2019/10/21/feed-makers-retailers-react-to-claims-in-fishmeal-report/\n\nNo article data seeded — import the Factiva or Nexis export:\n  cib import factiva --campaign changing-markets-2019-fishing-for-catastrophe --file <export>",
-    "created_at": "2026-08-19T13:49:33Z",
+    "created_at": "2026-08-19T14:06:40Z",
     "created_by": "user:root",
     "is_pre_publication": false
    },
@@ -1075,7 +1075,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "unique_stories": {
        "key": "unique_stories",
@@ -1091,7 +1091,7 @@
         "story_members": {}
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "unique_outlets": {
        "key": "unique_outlets",
@@ -1105,7 +1105,7 @@
         "total_articles": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "syndication_ratio": {
        "key": "syndication_ratio",
@@ -1122,7 +1122,7 @@
        "caveats": [
         "No stories imported, so the ratio is undefined rather than zero."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "tier_mix": {
        "key": "tier_mix",
@@ -1137,7 +1137,7 @@
         "total_articles": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "country_count": {
        "key": "country_count",
@@ -1153,7 +1153,7 @@
         "articles_total": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "language_count": {
        "key": "language_count",
@@ -1169,7 +1169,7 @@
         "articles_total": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "total_reach": {
        "key": "total_reach",
@@ -1186,7 +1186,7 @@
         "estimated_outlet_ids": []
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "reach_coverage": {
        "key": "reach_coverage",
@@ -1201,7 +1201,7 @@
         "outlets_total": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "peak_day": {
        "key": "peak_day",
@@ -1213,7 +1213,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "peak_volume": {
        "key": "peak_volume",
@@ -1225,7 +1225,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "days_to_peak": {
        "key": "days_to_peak",
@@ -1237,7 +1237,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "half_life_days": {
        "key": "half_life_days",
@@ -1249,7 +1249,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "days_to_90pct": {
        "key": "days_to_90pct",
@@ -1261,7 +1261,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "long_tail": {
        "key": "long_tail",
@@ -1275,7 +1275,7 @@
         "articles_after_day_30": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "own_company_mentions": {
        "key": "own_company_mentions",
@@ -1296,7 +1296,7 @@
        "caveats": [
         "No articles imported for this campaign."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "depth_score": {
        "key": "depth_score",
@@ -1347,7 +1347,7 @@
         "No articles imported for this campaign.",
         "The weighted total is only meaningful alongside its components; both are returned together and the API has no endpoint that returns the total alone."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "first_mention_day": {
        "key": "first_mention_day",
@@ -1361,7 +1361,7 @@
         "note": "No articles imported for this campaign."
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "competitor_comparison": {
        "key": "competitor_comparison",
@@ -1387,7 +1387,7 @@
         "No articles imported for this campaign.",
         "No competitor entities are configured, so this comparison has nothing to compare against."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "escalation_count": {
        "key": "escalation_count",
@@ -1407,7 +1407,7 @@
        "caveats": [
         "Nothing has ever been logged to this campaign's escalation log, so a count of zero means 'not recorded', not 'nothing happened'."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "days_to_first_escalation": {
        "key": "days_to_first_escalation",
@@ -1421,7 +1421,7 @@
         "log_last_updated": null
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "severity_weighted_total": {
        "key": "severity_weighted_total",
@@ -1445,7 +1445,7 @@
        "caveats": [
         "Nothing has ever been logged to this campaign's escalation log, so a count of zero means 'not recorded', not 'nothing happened'."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "escalation_chain": {
        "key": "escalation_chain",
@@ -1516,7 +1516,7 @@
        "caveats": [
         "Nothing has ever been logged to this campaign's escalation log, so a count of zero means 'not recorded', not 'nothing happened'."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       }
      },
      "caveats": [
@@ -1563,7 +1563,7 @@
      "investigation"
     ],
     "notes": "A cross-border investigation into the global fishmeal and aquaculture industries by The Outlaw Ocean Project, reported by more than two dozen journalists across as many countries, covering roughly 1,400 fishmeal plants, the vessels supplying them and where the resulting seafood ends up. Reported findings include fish farms in Xinjiang and Tibet, forced labour in Russia's Far East, the industry's role in Western Sahara, and fish diverted from local consumption into fishmeal plants in The Gambia and Mauritania.\n\nSTATUS: recorded as pre_publication. Preliminary findings were presented to a US congressional hearing in October 2023 and picked up by the trade press, but full publication could not be confirmed. VERIFY THIS before relying on it: if the investigation has published, set the date with\n  cib campaign set-published outlaw-ocean-food-for-feed <date> --status live\nwhich also recomputes day_index across any coverage already imported.\n\nSources: https://theoutlawocean.substack.com/p/the-outlaw-ocean-testifies-before · https://www.seafoodsource.com/news/aquaculture/outlaw-ocean-project-teases-new-aquaculture-investigation-during-congressional-hearing",
-    "created_at": "2026-08-19T13:49:33Z",
+    "created_at": "2026-08-19T14:06:40Z",
     "created_by": "user:root",
     "is_pre_publication": true
    },
@@ -1575,7 +1575,7 @@
      "precedent_campaign_id": 1,
      "rationale": "Same theme and the same named companies, including BioMar. Measures what a fishmeal investigation naming BioMar actually produced in Danish coverage.",
      "created_by": "user:root",
-     "created_at": "2026-08-19T13:49:33Z",
+     "created_at": "2026-08-19T14:06:40Z",
      "name": "Danwatch: De fisk du ikke ved du spiser",
      "slug": "danwatch-2019-west-african-fishmeal",
      "publisher_org": "Danwatch",
@@ -1586,7 +1586,7 @@
      "precedent_campaign_id": 2,
      "rationale": "Closest comparator for international reach: an NGO report on the same supply chain that named BioMar and drew a public company response.",
      "created_by": "user:root",
-     "created_at": "2026-08-19T13:49:33Z",
+     "created_at": "2026-08-19T14:06:40Z",
      "name": "Changing Markets Foundation: Fishing for Catastrophe",
      "slug": "changing-markets-2019-fishing-for-catastrophe",
      "publisher_org": "Changing Markets Foundation",
@@ -1597,7 +1597,7 @@
      "precedent_campaign_id": 4,
      "rationale": "The most recent investigation into the same supply chain, and the best guide to how this story now travels.",
      "created_by": "user:root",
-     "created_at": "2026-08-19T13:49:33Z",
+     "created_at": "2026-08-19T14:06:40Z",
      "name": "Danwatch: Forbandet fiskemel",
      "slug": "danwatch-2024-forbandet-fiskemel",
      "publisher_org": "Danwatch",
@@ -1615,7 +1615,7 @@
      "summary": "Congressional testimony: The Outlaw Ocean Project presented preliminary findings from its fishmeal and aquaculture investigation to the Congressional-Executive Commission on China hearing on forced labour in China's seafood industry. VERIFY the hearing date against the record before citing.",
      "source_ref": "https://www.cecc.gov/media-center/press-releases/forced-labor-in-china%E2%80%99s-seafood-industry-explored-at-hearing",
      "logged_by": "seed",
-     "created_at": "2026-08-19T13:49:33Z",
+     "created_at": "2026-08-19T14:06:40Z",
      "created_by": "user:root"
     },
     {
@@ -1626,7 +1626,7 @@
      "summary": "Trade-press pickup: SeafoodSource reported that the Outlaw Ocean Project had teased a new aquaculture investigation during the congressional hearing. Date assumed to be the hearing date — VERIFY and correct.",
      "source_ref": "https://www.seafoodsource.com/news/aquaculture/outlaw-ocean-project-teases-new-aquaculture-investigation-during-congressional-hearing",
      "logged_by": "seed",
-     "created_at": "2026-08-19T13:49:33Z",
+     "created_at": "2026-08-19T14:06:40Z",
      "created_by": "user:root"
     }
    ],
@@ -1664,7 +1664,7 @@
       "status": "archived",
       "rationale": "Same theme and the same named companies, including BioMar. Measures what a fishmeal investigation naming BioMar actually produced in Danish coverage.",
       "asserted_by": "user:root",
-      "asserted_at": "2026-08-19T13:49:33Z",
+      "asserted_at": "2026-08-19T14:06:40Z",
       "footprint": {
        "unique_stories": {
         "key": "unique_stories",
@@ -1689,7 +1689,7 @@
          "counts": "One per syndication cluster, plus every article that is in no cluster.",
          "caveat": "A cluster is a judgement made by the deduplication pass. Check the cluster list before quoting this figure in a contested setting."
         },
-        "computed_at": "2026-08-19T13:52:33Z"
+        "computed_at": "2026-08-19T14:06:40Z"
        },
        "unique_outlets": {
         "key": "unique_outlets",
@@ -1710,7 +1710,7 @@
          "counts": "COUNT(DISTINCT outlet_id) across all articles, before clustering.",
          "caveat": ""
         },
-        "computed_at": "2026-08-19T13:52:33Z"
+        "computed_at": "2026-08-19T14:06:40Z"
        },
        "country_count": {
         "key": "country_count",
@@ -1735,7 +1735,7 @@
          "counts": "COUNT(DISTINCT country) over articles, falling back to the outlet's country when the article row has none.",
          "caveat": "Articles with no country on either the article or the outlet are excluded and reported separately as a coverage gap."
         },
-        "computed_at": "2026-08-19T13:52:33Z"
+        "computed_at": "2026-08-19T14:06:40Z"
        },
        "syndication_ratio": {
         "key": "syndication_ratio",
@@ -1760,7 +1760,7 @@
          "counts": "Unique outlets divided by unique stories.",
          "caveat": "A high ratio is wire pickup, not independent interest. It inflates outlet counts without adding newsroom attention."
         },
-        "computed_at": "2026-08-19T13:52:33Z"
+        "computed_at": "2026-08-19T14:06:40Z"
        },
        "escalation_count": {
         "key": "escalation_count",
@@ -1788,7 +1788,7 @@
          "counts": "Escalation rows for the campaign within the day-index cutoff.",
          "caveat": "Manually logged. A zero can mean nothing happened or that nobody logged it; the log's last-updated date is shown alongside."
         },
-        "computed_at": "2026-08-19T13:52:33Z"
+        "computed_at": "2026-08-19T14:06:40Z"
        },
        "severity_weighted_total": {
         "key": "severity_weighted_total",
@@ -1819,7 +1819,7 @@
          "counts": "SUM(severity) across escalations, with the 1-5 anchors listed in the README.",
          "caveat": ""
         },
-        "computed_at": "2026-08-19T13:52:33Z"
+        "computed_at": "2026-08-19T14:06:40Z"
        }
       },
       "data_quality": {
@@ -1847,7 +1847,7 @@
       "status": "archived",
       "rationale": "Closest comparator for international reach: an NGO report on the same supply chain that named BioMar and drew a public company response.",
       "asserted_by": "user:root",
-      "asserted_at": "2026-08-19T13:49:33Z",
+      "asserted_at": "2026-08-19T14:06:40Z",
       "footprint": {
        "unique_stories": {
         "key": "unique_stories",
@@ -1872,7 +1872,7 @@
          "counts": "One per syndication cluster, plus every article that is in no cluster.",
          "caveat": "A cluster is a judgement made by the deduplication pass. Check the cluster list before quoting this figure in a contested setting."
         },
-        "computed_at": "2026-08-19T13:52:33Z"
+        "computed_at": "2026-08-19T14:06:40Z"
        },
        "unique_outlets": {
         "key": "unique_outlets",
@@ -1893,7 +1893,7 @@
          "counts": "COUNT(DISTINCT outlet_id) across all articles, before clustering.",
          "caveat": ""
         },
-        "computed_at": "2026-08-19T13:52:33Z"
+        "computed_at": "2026-08-19T14:06:40Z"
        },
        "country_count": {
         "key": "country_count",
@@ -1918,7 +1918,7 @@
          "counts": "COUNT(DISTINCT country) over articles, falling back to the outlet's country when the article row has none.",
          "caveat": "Articles with no country on either the article or the outlet are excluded and reported separately as a coverage gap."
         },
-        "computed_at": "2026-08-19T13:52:33Z"
+        "computed_at": "2026-08-19T14:06:40Z"
        },
        "syndication_ratio": {
         "key": "syndication_ratio",
@@ -1943,7 +1943,7 @@
          "counts": "Unique outlets divided by unique stories.",
          "caveat": "A high ratio is wire pickup, not independent interest. It inflates outlet counts without adding newsroom attention."
         },
-        "computed_at": "2026-08-19T13:52:33Z"
+        "computed_at": "2026-08-19T14:06:40Z"
        },
        "escalation_count": {
         "key": "escalation_count",
@@ -1971,7 +1971,7 @@
          "counts": "Escalation rows for the campaign within the day-index cutoff.",
          "caveat": "Manually logged. A zero can mean nothing happened or that nobody logged it; the log's last-updated date is shown alongside."
         },
-        "computed_at": "2026-08-19T13:52:33Z"
+        "computed_at": "2026-08-19T14:06:40Z"
        },
        "severity_weighted_total": {
         "key": "severity_weighted_total",
@@ -2002,7 +2002,7 @@
          "counts": "SUM(severity) across escalations, with the 1-5 anchors listed in the README.",
          "caveat": ""
         },
-        "computed_at": "2026-08-19T13:52:33Z"
+        "computed_at": "2026-08-19T14:06:40Z"
        }
       },
       "data_quality": {
@@ -2029,7 +2029,7 @@
       "status": "archived",
       "rationale": "The most recent investigation into the same supply chain, and the best guide to how this story now travels.",
       "asserted_by": "user:root",
-      "asserted_at": "2026-08-19T13:49:33Z",
+      "asserted_at": "2026-08-19T14:06:40Z",
       "footprint": {
        "unique_stories": {
         "key": "unique_stories",
@@ -2054,7 +2054,7 @@
          "counts": "One per syndication cluster, plus every article that is in no cluster.",
          "caveat": "A cluster is a judgement made by the deduplication pass. Check the cluster list before quoting this figure in a contested setting."
         },
-        "computed_at": "2026-08-19T13:52:33Z"
+        "computed_at": "2026-08-19T14:06:40Z"
        },
        "unique_outlets": {
         "key": "unique_outlets",
@@ -2075,7 +2075,7 @@
          "counts": "COUNT(DISTINCT outlet_id) across all articles, before clustering.",
          "caveat": ""
         },
-        "computed_at": "2026-08-19T13:52:33Z"
+        "computed_at": "2026-08-19T14:06:40Z"
        },
        "country_count": {
         "key": "country_count",
@@ -2100,7 +2100,7 @@
          "counts": "COUNT(DISTINCT country) over articles, falling back to the outlet's country when the article row has none.",
          "caveat": "Articles with no country on either the article or the outlet are excluded and reported separately as a coverage gap."
         },
-        "computed_at": "2026-08-19T13:52:33Z"
+        "computed_at": "2026-08-19T14:06:40Z"
        },
        "syndication_ratio": {
         "key": "syndication_ratio",
@@ -2125,7 +2125,7 @@
          "counts": "Unique outlets divided by unique stories.",
          "caveat": "A high ratio is wire pickup, not independent interest. It inflates outlet counts without adding newsroom attention."
         },
-        "computed_at": "2026-08-19T13:52:33Z"
+        "computed_at": "2026-08-19T14:06:40Z"
        },
        "escalation_count": {
         "key": "escalation_count",
@@ -2153,7 +2153,7 @@
          "counts": "Escalation rows for the campaign within the day-index cutoff.",
          "caveat": "Manually logged. A zero can mean nothing happened or that nobody logged it; the log's last-updated date is shown alongside."
         },
-        "computed_at": "2026-08-19T13:52:33Z"
+        "computed_at": "2026-08-19T14:06:40Z"
        },
        "severity_weighted_total": {
         "key": "severity_weighted_total",
@@ -2184,7 +2184,7 @@
          "counts": "SUM(severity) across escalations, with the 1-5 anchors listed in the README.",
          "caveat": ""
         },
-        "computed_at": "2026-08-19T13:52:33Z"
+        "computed_at": "2026-08-19T14:06:40Z"
        }
       },
       "data_quality": {
@@ -2214,7 +2214,7 @@
       "summary": "Congressional testimony: The Outlaw Ocean Project presented preliminary findings from its fishmeal and aquaculture investigation to the Congressional-Executive Commission on China hearing on forced labour in China's seafood industry. VERIFY the hearing date against the record before citing.",
       "source_ref": "https://www.cecc.gov/media-center/press-releases/forced-labor-in-china%E2%80%99s-seafood-industry-explored-at-hearing",
       "logged_by": "seed",
-      "created_at": "2026-08-19T13:49:33Z",
+      "created_at": "2026-08-19T14:06:40Z",
       "created_by": "user:root"
      },
      {
@@ -2225,7 +2225,7 @@
       "summary": "Trade-press pickup: SeafoodSource reported that the Outlaw Ocean Project had teased a new aquaculture investigation during the congressional hearing. Date assumed to be the hearing date — VERIFY and correct.",
       "source_ref": "https://www.seafoodsource.com/news/aquaculture/outlaw-ocean-project-teases-new-aquaculture-investigation-during-congressional-hearing",
       "logged_by": "seed",
-      "created_at": "2026-08-19T13:49:33Z",
+      "created_at": "2026-08-19T14:06:40Z",
       "created_by": "user:root"
      }
     ],
@@ -2320,7 +2320,7 @@
      "food_security"
     ],
     "notes": "Danwatch's later fishmeal series, reported by Oscar Rothstein from Senegal and Mauritania, on how fishmeal and fish oil production bought in quantity by Danish companies contributes to migration towards the Canary Islands. Reporting was carried out in autumn 2024. The series won Amnesty International Denmark's Media Prize 2025.\n\nDATE PRECISION: only the year could be confirmed, so published_at is 1 January with precision='year' and every day-aligned figure carries that error bar. This campaign is the strongest available precedent for a Danwatch investigation, so pinning its real date is worth doing early.\n\nSources: https://danwatch.dk/forbandet-fiskemel/ · https://amnesty.dk/amnestys-mediepris-2025-tildeles-artikelserier-om-skaemmende-forhold-paa-bosteder-og-fiskemels-betydning-for-migrationen-til-europa/",
-    "created_at": "2026-08-19T13:49:33Z",
+    "created_at": "2026-08-19T14:06:40Z",
     "created_by": "user:root",
     "is_pre_publication": false
    },
@@ -2352,7 +2352,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "unique_stories": {
        "key": "unique_stories",
@@ -2368,7 +2368,7 @@
         "story_members": {}
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "unique_outlets": {
        "key": "unique_outlets",
@@ -2382,7 +2382,7 @@
         "total_articles": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "syndication_ratio": {
        "key": "syndication_ratio",
@@ -2399,7 +2399,7 @@
        "caveats": [
         "No stories imported, so the ratio is undefined rather than zero."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "tier_mix": {
        "key": "tier_mix",
@@ -2414,7 +2414,7 @@
         "total_articles": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "country_count": {
        "key": "country_count",
@@ -2430,7 +2430,7 @@
         "articles_total": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "language_count": {
        "key": "language_count",
@@ -2446,7 +2446,7 @@
         "articles_total": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "total_reach": {
        "key": "total_reach",
@@ -2463,7 +2463,7 @@
         "estimated_outlet_ids": []
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "reach_coverage": {
        "key": "reach_coverage",
@@ -2478,7 +2478,7 @@
         "outlets_total": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "peak_day": {
        "key": "peak_day",
@@ -2490,7 +2490,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "peak_volume": {
        "key": "peak_volume",
@@ -2502,7 +2502,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "days_to_peak": {
        "key": "days_to_peak",
@@ -2514,7 +2514,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "half_life_days": {
        "key": "half_life_days",
@@ -2526,7 +2526,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "days_to_90pct": {
        "key": "days_to_90pct",
@@ -2538,7 +2538,7 @@
        "row_count": 0,
        "basis": {},
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "long_tail": {
        "key": "long_tail",
@@ -2552,7 +2552,7 @@
         "articles_after_day_30": 0
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "own_company_mentions": {
        "key": "own_company_mentions",
@@ -2573,7 +2573,7 @@
        "caveats": [
         "No articles imported for this campaign."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "depth_score": {
        "key": "depth_score",
@@ -2624,7 +2624,7 @@
         "No articles imported for this campaign.",
         "The weighted total is only meaningful alongside its components; both are returned together and the API has no endpoint that returns the total alone."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "first_mention_day": {
        "key": "first_mention_day",
@@ -2638,7 +2638,7 @@
         "note": "No articles imported for this campaign."
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "competitor_comparison": {
        "key": "competitor_comparison",
@@ -2664,7 +2664,7 @@
         "No articles imported for this campaign.",
         "No competitor entities are configured, so this comparison has nothing to compare against."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "escalation_count": {
        "key": "escalation_count",
@@ -2684,7 +2684,7 @@
        "caveats": [
         "Nothing has ever been logged to this campaign's escalation log, so a count of zero means 'not recorded', not 'nothing happened'."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "days_to_first_escalation": {
        "key": "days_to_first_escalation",
@@ -2698,7 +2698,7 @@
         "log_last_updated": null
        },
        "caveats": [],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "severity_weighted_total": {
        "key": "severity_weighted_total",
@@ -2722,7 +2722,7 @@
        "caveats": [
         "Nothing has ever been logged to this campaign's escalation log, so a count of zero means 'not recorded', not 'nothing happened'."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       },
       "escalation_chain": {
        "key": "escalation_chain",
@@ -2793,7 +2793,7 @@
        "caveats": [
         "Nothing has ever been logged to this campaign's escalation log, so a count of zero means 'not recorded', not 'nothing happened'."
        ],
-       "computed_at": "2026-08-19T13:52:33Z"
+       "computed_at": "2026-08-19T14:06:40Z"
       }
      },
      "caveats": [
@@ -3302,7 +3302,7 @@
     "last_polled_at": null,
     "last_error": null,
     "notes": "Substack publishes an RSS feed at /feed. Detection only — not marked promotes_to_live, because the newsletter carries plenty of posts that are not this investigation and one of them should not set the campaign's day zero.",
-    "created_at": "2026-08-19T13:49:33Z",
+    "created_at": "2026-08-19T14:06:40Z",
     "created_by": "user:root",
     "campaign_slug": "outlaw-ocean-food-for-feed",
     "hits": 0
@@ -3319,7 +3319,7 @@
     "last_polled_at": null,
     "last_error": null,
     "notes": "Content rule, applied to whichever feeds are enabled for this campaign.",
-    "created_at": "2026-08-19T13:49:33Z",
+    "created_at": "2026-08-19T14:06:40Z",
     "created_by": "user:root",
     "campaign_slug": "outlaw-ocean-food-for-feed",
     "hits": 0
@@ -3336,7 +3336,7 @@
     "last_polled_at": null,
     "last_error": null,
     "notes": "The Outlaw Ocean Project's founder and lead reporter. Confirm the actual byline on the investigation when it lands — it may be a team credit.",
-    "created_at": "2026-08-19T13:49:33Z",
+    "created_at": "2026-08-19T14:06:40Z",
     "created_by": "user:root",
     "campaign_slug": "outlaw-ocean-food-for-feed",
     "hits": 0
@@ -3353,7 +3353,7 @@
     "last_polled_at": null,
     "last_error": null,
     "notes": "Automated coverage ingest via `cib ingest`. Needs no API key. Gives cross-country volume within minutes of a story breaking, but no article body, so these rows cannot be scanned for entity mentions.",
-    "created_at": "2026-08-19T13:49:33Z",
+    "created_at": "2026-08-19T14:06:40Z",
     "created_by": "user:root",
     "campaign_slug": "outlaw-ocean-food-for-feed",
     "hits": 0
@@ -3370,7 +3370,7 @@
     "last_polled_at": null,
     "last_error": null,
     "notes": "DISABLED: the sitemap URL is assumed, not confirmed. Verify it resolves, then enable. This is the rule marked promotes_to_live — a hit sets the campaign's publication date — so it must be precise enough to mean 'it has published'.",
-    "created_at": "2026-08-19T13:49:33Z",
+    "created_at": "2026-08-19T14:06:40Z",
     "created_by": "user:root",
     "campaign_slug": "outlaw-ocean-food-for-feed",
     "hits": 0

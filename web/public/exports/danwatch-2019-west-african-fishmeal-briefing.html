@@ -15,7 +15,7 @@ code { background: #f2f4f7; padding: .1rem .3rem; border-radius: 3px; font-size:
 .caveat { background: #fffbe6; border-left: 3px solid #d9a300; padding: .5rem 1rem; margin: .8rem 0; }
 @media print { body { margin: 0; max-width: none; font-size: 11pt; } h2 { page-break-after: avoid; } }
 </style></head><body><h1>Campaign briefing: Danwatch: De fisk du ikke ved du spiser</h1>
-<p class='meta'>Generated 2026-08-19T13:52:33Z by user:root. Every figure below is measured from imported records and drills down to the source rows listed in the evidence appendix.</p>
+<p class='meta'>Generated 2026-08-19T14:06:40Z by user:root. Every figure below is measured from imported records and drills down to the source rows listed in the evidence appendix.</p>
 <h2>1. Campaign</h2>
 <p style='margin:.2rem 0 .2rem 1rem'>&bull; <strong>Publisher:</strong> Danwatch</p>
 <p style='margin:.2rem 0 .2rem 1rem'>&bull; <strong>Type:</strong> journalism</p>
@@ -25,7 +25,13 @@ code { background: #f2f4f7; padding: .1rem .3rem; border-radius: 3px; font-size:
 <p style='margin:.2rem 0 .2rem 1rem'>&bull; <strong>Themes:</strong> fishmeal, west<em>africa, food</em>security, supply_chain</p>
 <p>Danish investigative outlet Danwatch&#x27;s series on fishmeal and fish oil imported from West Africa. In October 2019 Danwatch put questions to six Danish companies buying fishmeal and fish oil from the region about how they avoid affecting West African food security. BioMar was among the companies named, alongside Pelagia, Triple Nine Group, FF Skagen, Aller Aqua and ED&amp;F Man.</p>
 <p>DATE PRECISION: confirmed as October 2019; the exact publication day was not established. published_at is set to the 1st with precision=&#x27;month&#x27;, so every day-aligned figure carries that error bar. Pin it with <code>cib campaign set-published</code> once confirmed against the source.</p>
-<p>Sources: https://danwatch.dk/serie/de-fisk-du-ikke-ved-du-spiser/ · https://danwatch.dk/det-siger-virksomhederne-om-import-af-fisk-fra-vestafrika/</p>
+<p>Sources: https://danwatch.dk/serie/de-fisk-du-ikke-ved-du-spiser/ · https://danwatch.dk/det-siger-virksomhederne-om-import-af-fisk-fra-vestafrika/ · English version: https://danwatch.dk/en/they-buy-fish-meal-and-fish-oil-from-west-africa/</p>
+<p>KNOWN ESCALATION, NOT YET LOGGED: Danwatch reported that the fishmeal revelations were taken up in the EU and in the Folketing. On the severity anchors that is a 2 (formal query or parliamentary question), and it is the first link in this campaign&#x27;s escalation chain. It is not logged because the date could not be confirmed and an escalation with a guessed date is not evidence. Log it once dated:</p>
+<p>  cib escalation add --campaign danwatch-2019-west-african-fishmeal \</p>
+<p>    --type parliamentary_question --actor &#x27;Folketinget&#x27; --severity 2 \</p>
+<p>    --occurred-at &lt;date&gt; --source-url https://danwatch.dk/fiskemels-afsloeringer-tages-op-i-eu-og-folketinget/ \</p>
+<p>    --description &#x27;Fishmeal revelations raised in the EU and the Danish parliament&#x27;</p>
+<p>A related follow-up on transparency demands: https://danwatch.dk/eksperter-kraever-stoerre-gennemsigtighed-med-import-af-fiskemel-og-olie-fra-vestafrika/</p>
 <p>No article data seeded — import the Infomedia export:</p>
 <p>  cib import infomedia --campaign danwatch-2019-west-african-fishmeal --file &lt;export&gt;</p>
 <table>
