@@ -84,6 +84,9 @@ class Campaign:
     campaign_type: str
     status: str
     published_at: str | None = None
+    # How precisely published_at is known: 'day', 'month' or 'year'. Anything but 'day' means the
+    # day-aligned figures carry an error bar and every metric set says so.
+    published_at_precision: str = "day"
     first_signal_at: str | None = None
     timezone: str = "UTC"
     themes: str = "[]"
@@ -98,6 +101,10 @@ class Campaign:
     @property
     def is_pre_publication(self) -> bool:
         return self.published_at is None
+
+    @property
+    def date_is_exact(self) -> bool:
+        return self.published_at is None or self.published_at_precision == "day"
 
     @classmethod
     def from_row(cls, row) -> Campaign | None:

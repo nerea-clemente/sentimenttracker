@@ -87,6 +87,17 @@ def campaign_metrics(conn: sqlite3.Connection, campaign_ref: str | int,
     ))
     result.data_quality = _data_quality(conn, campaign, at_day_index)
 
+    if not campaign.date_is_exact:
+        unit = campaign.published_at_precision
+        slack = {"month": "up to 30 days", "year": "up to 12 months"}.get(unit, "an unknown span")
+        result.caveats.append(
+            f"This campaign's publication date is only known to the {unit} "
+            f"({campaign.published_at[:7] if unit == 'month' else campaign.published_at[:4]}). "
+            f"Day zero is assumed, so every day-aligned figure — days to peak, half-life, days to "
+            f"90% of volume, and any comparison at a cutoff — could be out by {slack}. "
+            "Pin the exact date with `cib campaign set-published` before quoting them."
+        )
+
     observed = max_observed_day_index(conn, campaign.id)
     if result.data_quality["articles_total_imported"] == 0:
         result.caveats.append(

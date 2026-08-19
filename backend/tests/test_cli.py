@@ -40,7 +40,7 @@ def test_init_and_seed_run(tmp_path, capsys):
     assert main([*base, "seed"]) == 0
     assert main([*base, "campaign", "list"]) == 0
     output = capsys.readouterr().out
-    assert "seed-forthcoming-fishmeal-supply-chain-investigation" in output
+    assert "outlaw-ocean-food-for-feed" in output
     assert "pre_publication" in output
 
 

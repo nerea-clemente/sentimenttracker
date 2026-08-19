@@ -576,16 +576,57 @@ for the test suite — which is exactly why they may never be presented as measu
 
 ## Seed data
 
-`cib seed` creates three campaign records — two archived baselines and one pre-publication — plus
-an own-company entity, watch rules and precedent links.
+`cib seed` creates the real campaigns, entities and pre-publication signals. Every identity cites
+its sources in the record's own `notes`; nothing was written from recollection.
 
-Everything in it is a **placeholder marked TODO**, and no article data is invented:
+**Campaigns**
 
-- The two archived campaigns are created **empty**. Their footprints stay unmeasured until real
-  archive exports are imported, and the empty state says so explicitly rather than rendering as
-  low coverage.
-- Watch rules are created **disabled**, because a rule pointing at a placeholder domain would poll
-  nothing while looking perfectly healthy.
-- Publication dates on the archived campaigns are placeholders. Correct them with
-  `cib campaign set-published` **before** importing coverage — every `day_index` is measured from
-  them.
+| Campaign | Publisher | Published | Status |
+|---|---|---|---|
+| De fisk du ikke ved du spiser | Danwatch | October 2019 *(month precision)* | archived |
+| Fishing for Catastrophe | Changing Markets Foundation | 15 October 2019 | archived |
+| Forbandet fiskemel | Danwatch | 2024 *(year precision)* | archived |
+| Food for Feed | The Outlaw Ocean Project | — | **pre-publication** |
+
+**Entities** — BioMar as the own-company, with its group and legal-entity aliases; Skretting and
+Cargill Aqua Nutrition/EWOS as competitors, taken from the existing `mediatracker` configuration
+rather than inferred; Aller Aqua as a peer, TripleNine, FF Skagen and Pelagia as suppliers, all
+named in the Danwatch investigation; MarinTrust as a certifier. Schouw & Co is BioMar's parent but
+is deliberately **not** typed `own_company` — two of those make every exposure metric refuse
+rather than measure the wrong company.
+
+### What is deliberately not filled in
+
+**Article data.** Archive exports are licensed and cannot be fetched. The campaigns are created
+empty and the empty state says so, rather than rendering as low coverage.
+
+**Days that are not known.** Archive research routinely yields "October 2019" rather than a day,
+and every `day_index` is measured from `published_at` — so a guessed day shifts a campaign's whole
+timeline by up to a month, which is precisely what distorts days-to-peak and half-life. Campaigns
+therefore carry `published_at_precision` (`day` / `month` / `year`). Anything less than `day` makes
+every metric set carry the error bar:
+
+> This campaign's publication date is only known to the month (2019-10). Day zero is assumed, so
+> every day-aligned figure — days to peak, half-life, days to 90% of volume, and any comparison at
+> a cutoff — could be out by up to 30 days.
+
+Pin it once confirmed:
+
+```bash
+cib campaign set-published danwatch-2019-west-african-fishmeal 2019-10-15T00:00:00
+```
+
+**Facts that could not be confirmed** are marked `VERIFY` in the record rather than implied to be
+known. Two to check before relying on them:
+
+- Whether *Food for Feed* has since published. It is recorded as pre-publication because full
+  publication could not be confirmed; if it has, `cib campaign set-published` also recomputes
+  `day_index` across any coverage already imported.
+- The two pre-publication signal dates, both assumed to be the hearing date.
+
+**Watch rules** whose feed URL could be confirmed are enabled. The one rule marked
+`promotes_to_live` — which rewrites a campaign's whole timeline on a hit — is left disabled
+because its URL is assumed, and a rule that can set day zero has to be precise enough to mean
+"it has published".
+
+Run `cib doctor` at any time for what is still outstanding.

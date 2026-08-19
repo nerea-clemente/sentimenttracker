@@ -129,6 +129,18 @@ def _check_campaigns(conn: sqlite3.Connection, report: Report) -> None:
             "# do this BEFORE importing coverage",
         )
 
+    imprecise = [c for c in campaigns if c.published_at and not c.date_is_exact]
+    if imprecise:
+        report.add(
+            "warning", "imprecise-dates",
+            f"{len(imprecise)} campaign(s) have a publication date known only to the "
+            f"{'/'.join(sorted({c.published_at_precision for c in imprecise}))}",
+            "Day zero is assumed for these, so days to peak, half-life and any day-aligned "
+            "comparison carry that error bar: "
+            + ", ".join(f"{c.slug} ({c.published_at[:7]})" for c in imprecise),
+            "cib campaign set-published <slug> <YYYY-MM-DDTHH:MM:SS>   # once the day is confirmed",
+        )
+
     empty = [c for c in campaigns if c.published_at and not int(query_one(
         conn, "SELECT COUNT(*) AS n FROM articles WHERE campaign_id = ?", (c.id,))["n"])]
     if empty:

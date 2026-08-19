@@ -71,9 +71,10 @@ def cmd_seed(args) -> int:
     else:
         _print_json(created)
     print(
-        "\nSeeded records are placeholders. No article data was invented: the two archived "
-        "campaigns are empty until real exports are imported, and the watch rules are disabled "
-        "because they point at placeholder domains."
+        "\nCampaign identities are real and each record cites its sources in `notes`. No article "
+        "data was seeded: archive exports are licensed and must be imported by hand, so the "
+        "campaigns are empty and say so rather than rendering as low coverage.\n"
+        "Run `cib doctor` for what still needs confirming."
     )
     return 0
 
@@ -107,7 +108,9 @@ def cmd_campaign_add(args) -> int:
         campaign_id = campaign_repo.create(
             conn, name=args.name, publisher_org=args.publisher,
             campaign_type=args.type, status=args.status,
-            published_at=args.published_at, first_signal_at=args.first_signal_at,
+            published_at=args.published_at,
+            published_at_precision=args.published_at_precision,
+            first_signal_at=args.first_signal_at,
             timezone=args.timezone, themes=args.theme or [], notes=args.notes, slug=args.slug,
         )
     campaign = campaign_repo.get(conn, campaign_id)
@@ -119,7 +122,8 @@ def cmd_campaign_set_published(args) -> int:
     conn = _open(args)
     campaign = campaign_repo.resolve(conn, args.campaign)
     with transaction(conn):
-        campaign_repo.set_published(conn, campaign.id, args.published_at, status=args.status)
+        campaign_repo.set_published(conn, campaign.id, args.published_at, status=args.status,
+                                    precision=args.precision)
         from .repo import articles as article_repo
         updated = article_repo.recompute_day_index(
             conn, campaign.id, args.published_at, campaign.timezone
@@ -795,6 +799,9 @@ def build_parser() -> argparse.ArgumentParser:
                    choices=["pre_publication", "live", "decaying", "archived"])
     p.add_argument("--published-at", dest="published_at",
                    help="ISO date/time. Omit for a pre_publication campaign.")
+    p.add_argument("--date-precision", dest="published_at_precision", default="day",
+                   choices=["day", "month", "year"],
+                   help="How precisely the publication date is known (default: day)")
     p.add_argument("--first-signal-at", dest="first_signal_at")
     p.add_argument("--timezone", default="Europe/Copenhagen")
     p.add_argument("--theme", action="append")
@@ -807,6 +814,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("published_at")
     p.add_argument("--status", default="live",
                    choices=["live", "decaying", "archived"])
+    p.add_argument("--precision", default="day", choices=["day", "month", "year"],
+                   help="How precisely the date is known. Anything but 'day' makes every "
+                        "day-aligned figure carry that error bar.")
     p.set_defaults(func=cmd_campaign_set_published)
 
     p = campaign.add_parser("precedent", help="Link a past campaign as publisher precedent")

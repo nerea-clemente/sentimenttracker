@@ -1,0 +1,69 @@
+<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Briefing — Danwatch: Forbandet fiskemel</title><style>
+:root { color-scheme: light; }
+body { font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+       max-width: 62rem; margin: 2rem auto; padding: 0 1.5rem; color: #16191d; background: #fff; }
+h1 { font-size: 1.7rem; margin-bottom: .25rem; }
+h2 { font-size: 1.15rem; margin-top: 2rem; border-bottom: 1px solid #d8dde3; padding-bottom: .3rem; }
+h3 { font-size: 1rem; margin-top: 1.4rem; }
+table { border-collapse: collapse; width: 100%; margin: .8rem 0; font-size: .87rem; }
+th, td { border: 1px solid #d8dde3; padding: .4rem .55rem; text-align: left; vertical-align: top; }
+th { background: #f2f4f7; font-weight: 600; }
+blockquote { border-left: 3px solid #c0392b; margin: 1rem 0; padding: .5rem 1rem;
+             background: #fdf3f2; }
+code { background: #f2f4f7; padding: .1rem .3rem; border-radius: 3px; font-size: .85em; }
+.meta { color: #5a6472; font-size: .85rem; }
+.caveat { background: #fffbe6; border-left: 3px solid #d9a300; padding: .5rem 1rem; margin: .8rem 0; }
+@media print { body { margin: 0; max-width: none; font-size: 11pt; } h2 { page-break-after: avoid; } }
+</style></head><body><h1>Campaign briefing: Danwatch: Forbandet fiskemel</h1>
+<p class='meta'>Generated 2026-08-19T13:52:33Z by user:root. Every figure below is measured from imported records and drills down to the source rows listed in the evidence appendix.</p>
+<h2>1. Campaign</h2>
+<p style='margin:.2rem 0 .2rem 1rem'>&bull; <strong>Publisher:</strong> Danwatch</p>
+<p style='margin:.2rem 0 .2rem 1rem'>&bull; <strong>Type:</strong> journalism</p>
+<p style='margin:.2rem 0 .2rem 1rem'>&bull; <strong>Status:</strong> archived</p>
+<p style='margin:.2rem 0 .2rem 1rem'>&bull; <strong>Published:</strong> 2024-01-01T00:00:00</p>
+<p style='margin:.2rem 0 .2rem 1rem'>&bull; <strong>First internal signal:</strong> not recorded</p>
+<p style='margin:.2rem 0 .2rem 1rem'>&bull; <strong>Themes:</strong> fishmeal, west<em>africa, migration, food</em>security</p>
+<p>Danwatch&#x27;s later fishmeal series, reported by Oscar Rothstein from Senegal and Mauritania, on how fishmeal and fish oil production bought in quantity by Danish companies contributes to migration towards the Canary Islands. Reporting was carried out in autumn 2024. The series won Amnesty International Denmark&#x27;s Media Prize 2025.</p>
+<p>DATE PRECISION: only the year could be confirmed, so published_at is 1 January with precision=&#x27;year&#x27; and every day-aligned figure carries that error bar. This campaign is the strongest available precedent for a Danwatch investigation, so pinning its real date is worth doing early.</p>
+<p>Sources: https://danwatch.dk/forbandet-fiskemel/ · https://amnesty.dk/amnestys-mediepris-2025-tildeles-artikelserier-om-skaemmende-forhold-paa-bosteder-og-fiskemels-betydning-for-migrationen-til-europa/</p>
+<table>
+<tr><th>Metric</th><th>Value</th><th>Source rows</th><th>What it counts</th></tr>
+<tr><td>Unique stories</td><td>0</td><td>0</td><td>One per syndication cluster, plus every article that is in no cluster.</td></tr>
+<tr><td>Unique outlets</td><td>0</td><td>0</td><td>COUNT(DISTINCT outlet_id) across all articles, before clustering.</td></tr>
+<tr><td>Total articles</td><td>0</td><td>0</td><td>Every article row for the campaign within the day-index cutoff.</td></tr>
+<tr><td>Syndication ratio</td><td>—</td><td>0</td><td>Unique outlets divided by unique stories.</td></tr>
+<tr><td>Countries</td><td>0</td><td>0</td><td>COUNT(DISTINCT country) over articles, falling back to the outlet&#x27;s country when the article row has none.</td></tr>
+<tr><td>Languages</td><td>0</td><td>0</td><td>COUNT(DISTINCT language) over articles, falling back to the outlet&#x27;s language.</td></tr>
+<tr><td>Outlet tier mix</td><td>—</td><td>0</td><td>Articles grouped by their outlet&#x27;s tier, as counts and as a share of all articles.</td></tr>
+<tr><td>Total reach where sourced</td><td>—</td><td>0</td><td>SUM(outlets.reach<em>value) over distinct outlets with a non-null reach</em>value.</td></tr>
+<tr><td>Outlets with a known reach value</td><td>—</td><td>0</td><td>Outlets with a non-null reach_value divided by all outlets carrying the campaign.</td></tr>
+<tr><td>Peak day</td><td>not available — No dated articles imported for this campaign.</td><td>0</td><td>The earliest day_index holding the maximum daily article count. Ties go to the earlier day.</td></tr>
+<tr><td>Peak day volume</td><td>not available — No dated articles imported for this campaign.</td><td>0</td><td>The maximum daily article count.</td></tr>
+<tr><td>Days to peak</td><td>not available — No dated articles imported for this campaign.</td><td>0</td><td>The peak day index itself.</td></tr>
+<tr><td>Half-life</td><td>not available — No dated articles imported for this campaign.</td><td>0</td><td>Days from the peak day to the first day whose 3-day trailing mean volume is below 10% of the peak volume.</td></tr>
+<tr><td>Days to 90% of volume</td><td>not available — No dated articles imported for this campaign.</td><td>0</td><td>The first day index at which cumulative articles reach 90% of the campaign total.</td></tr>
+<tr><td>Long tail</td><td>no</td><td>0</td><td>True if any article has a day index greater than 30.</td></tr>
+<tr><td>Own-company mentions</td><td>0</td><td>0</td><td>Mention rows joining the own_company entity, grouped by role.</td></tr>
+<tr><td>Exposure depth</td><td>0</td><td>0</td><td>Subject x5, named supplier x3, named buyer x3, quoted response x2, passing reference x1, summed across mentions.</td></tr>
+<tr><td>First mention</td><td>not available — No dated mention of the own-company entity in the imported articles.</td><td>0</td><td>The lowest day index among articles containing an own-company mention.</td></tr>
+<tr><td>Named alongside peers</td><td>no competitors configured</td><td>0</td><td>Mention counts per entity for own_company and competitor entities, side by side.</td></tr>
+<tr><td>Escalations</td><td>0</td><td>0</td><td>Escalation rows for the campaign within the day-index cutoff.</td></tr>
+<tr><td>Days to first escalation</td><td>not available — No escalations logged for this campaign within the cutoff.</td><td>0</td><td>Day index of the earliest escalation.</td></tr>
+<tr><td>Severity-weighted escalation total</td><td>0</td><td>0</td><td>SUM(severity) across escalations, with the 1-5 anchors listed in the README.</td></tr>
+<tr><td>Escalation chain</td><td>publication</td><td>1</td><td>The furthest stage reached, with the first event in each stage and the days it took.</td></tr>
+</table>
+<h3>Caveats that must travel with these figures</h3>
+<p style='margin:.2rem 0 .2rem 1rem'>&bull; This campaign&#x27;s publication date is only known to the year (2024). Day zero is assumed, so every day-aligned figure — days to peak, half-life, days to 90% of volume, and any comparison at a cutoff — could be out by up to 12 months. Pin the exact date with <code>cib campaign set-published</code> before quoting them.</p>
+<p style='margin:.2rem 0 .2rem 1rem'>&bull; No articles have been imported for this campaign. Every footprint figure below is an empty dataset, not a measurement of low coverage.</p>
+<h3>Data quality</h3>
+<p style='margin:.2rem 0 .2rem 1rem'>&bull; Articles in window: 0 (of 0 imported)</p>
+<p style='margin:.2rem 0 .2rem 1rem'>&bull; Articles that could not be dated: 0</p>
+<p style='margin:.2rem 0 .2rem 1rem'>&bull; Articles with no country: None%</p>
+<p style='margin:.2rem 0 .2rem 1rem'>&bull; Articles with body text: None%</p>
+<p style='margin:.2rem 0 .2rem 1rem'>&bull; Outlets with no sourced reach figure: None%</p>
+<p style='margin:.2rem 0 .2rem 1rem'>&bull; Last import: never</p>
+<p style='margin:.2rem 0 .2rem 1rem'>&bull; Sources: none</p>
+<h2>4. Escalation timeline</h2>
+<p><em>No escalations logged. This log is maintained by hand: an empty log means nothing has been recorded, not that nothing has happened.</em></p>
+<h2>5. Evidence appendix</h2>
+<p><em>No articles imported for this campaign.</em></p></body></html>

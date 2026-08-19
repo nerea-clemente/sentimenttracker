@@ -100,7 +100,8 @@ def cutoff_key(cutoff: int | None) -> str:
 def _campaign_summaries(conn: sqlite3.Connection) -> list[dict[str, Any]]:
     return _rows(query(conn, """
         SELECT c.id, c.name, c.slug, c.publisher_org, c.campaign_type, c.status,
-               c.published_at, c.first_signal_at, c.timezone, c.themes, c.notes,
+               c.published_at, c.published_at_precision, c.first_signal_at, c.timezone,
+               c.themes, c.notes,
                (SELECT COUNT(*) FROM articles a WHERE a.campaign_id = c.id) AS article_count,
                (SELECT COUNT(DISTINCT a.outlet_id) FROM articles a WHERE a.campaign_id = c.id)
                    AS outlet_count,

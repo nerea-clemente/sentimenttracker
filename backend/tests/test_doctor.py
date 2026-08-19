@@ -22,23 +22,27 @@ def codes(report, level=None) -> set[str]:
     return {f.code for f in (report.of(level) if level else report.findings)}
 
 
-def test_a_fresh_seed_is_all_blockers_and_says_why(conn):
+def test_a_fresh_seed_leaves_only_the_gaps_a_human_must_fill(conn):
+    """The seed carries real identities, so what remains is what only a licensed export can fix."""
     from cib import seed
 
     seed.run(conn)
     report = doctor.run(conn)
 
-    assert codes(report, "blocker") >= {
-        "placeholder-campaigns",     # TODO names
-        "placeholder-dates",         # stand-in publication dates
-        "no-coverage",               # archived campaigns with nothing imported
-        "unwatched-prepublication",  # every rule disabled
-        "placeholder-own-company",   # TODO — our company
-        "nothing-imported",
+    # The only blockers are the missing coverage itself.
+    assert codes(report, "blocker") == {"no-coverage", "nothing-imported"}
+
+    # Identities are real, so none of these fire any more.
+    assert not codes(report) & {
+        "placeholder-campaigns", "placeholder-dates", "placeholder-own-company",
+        "no-own-company", "no-competitors", "unwatched-prepublication",
+        "no-automated-ingest", "placeholder-signals",
     }
-    assert codes(report, "warning") >= {"no-competitors", "no-automated-ingest"}
-    # Every finding must be actionable, not just a complaint.
-    for finding in report.blockers:
+
+    # Dates known only to the month or year are surfaced rather than passed off as exact.
+    assert "imprecise-dates" in codes(report, "warning")
+
+    for finding in report.blockers + report.warnings:
         assert finding.fix, f"{finding.code} reports a problem with no fix"
 
 

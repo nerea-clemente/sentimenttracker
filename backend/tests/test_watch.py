@@ -171,15 +171,43 @@ def test_a_feed_error_is_recorded_on_the_rule_not_swallowed(conn, monkeypatch):
     assert "connection refused" in rule_repo.get(conn, rule_id).last_error
 
 
-def test_seed_watch_rules_are_disabled(conn):
-    """A rule pointing at a placeholder domain would poll nothing while looking healthy."""
+def test_seeded_rules_with_unconfirmed_urls_stay_disabled(conn):
+    """A rule pointing at a guessed URL polls nothing while looking healthy.
+
+    The seed enables rules whose feed URL could be confirmed and leaves the rest disabled, with
+    the reason in the rule's notes.
+    """
     from cib import seed
 
     seed.run(conn)
     rules = rule_repo.list_all(conn)
     assert rules
-    assert all(r.enabled == 0 for r in rules)
-    assert rule_repo.list_all(conn, enabled_only=True) == []
+
+    disabled = [r for r in rules if not r.enabled]
+    assert disabled, "an unconfirmed URL must not be left enabled"
+    for rule in disabled:
+        assert "TODO" in rule.name or "DISABLED" in (rule.notes or ""), (
+            f"rule #{rule.id} is disabled without saying why"
+        )
+
+
+def test_only_a_precise_seeded_rule_may_set_day_zero(conn):
+    """promotes_to_live rewrites a campaign's whole timeline, so it needs a precise trigger.
+
+    A publisher's whole newsletter feed carries plenty of posts that are not the investigation,
+    and one of them must not become day zero.
+    """
+    from cib import seed
+
+    seed.run(conn)
+    promoting = [r for r in rule_repo.list_all(conn) if r.promotes_to_live]
+    for rule in promoting:
+        assert rule.rule_type in ("sitemap", "domain"), (
+            f"rule #{rule.id} ({rule.rule_type}) may set day zero but is not precise enough"
+        )
+        assert not rule.enabled, (
+            f"rule #{rule.id} may set day zero but its URL is not confirmed; it must stay disabled"
+        )
 
 
 def test_notification_channels_report_per_channel_outcome(monkeypatch):

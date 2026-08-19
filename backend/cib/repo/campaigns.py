@@ -28,6 +28,7 @@ def create(
     campaign_type: str,
     status: str,
     published_at: str | None = None,
+    published_at_precision: str = "day",
     first_signal_at: str | None = None,
     timezone: str = "Europe/Copenhagen",
     themes: list[str] | None = None,
@@ -41,6 +42,7 @@ def create(
         "campaign_type": campaign_type,
         "status": status,
         "published_at": published_at,
+        "published_at_precision": published_at_precision,
         "first_signal_at": first_signal_at,
         "timezone": timezone,
         "themes": json.dumps(themes or []),
@@ -79,15 +81,16 @@ def list_all(conn: sqlite3.Connection, status: str | None = None) -> list[Campai
 
 
 def set_published(conn: sqlite3.Connection, campaign_id: int, published_at: str,
-                  status: str = "live") -> None:
+                  status: str = "live", precision: str = "day") -> None:
     """Set a campaign's day zero. Also promotes it out of pre_publication status.
 
     Callers must recompute day_index afterwards (see articles.recompute_day_index) because the
     cached offsets on existing articles are now stale.
     """
     conn.execute(
-        "UPDATE campaigns SET published_at = ?, status = ? WHERE id = ?",
-        (published_at, status, campaign_id),
+        "UPDATE campaigns SET published_at = ?, status = ?, published_at_precision = ? "
+        "WHERE id = ?",
+        (published_at, status, precision, campaign_id),
     )
 
 
